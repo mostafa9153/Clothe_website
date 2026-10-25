@@ -101,7 +101,11 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={`${cormorant.variable} ${jost.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${cormorant.variable} ${jost.variable}`}
+    >
       <head>
         <script
           type="application/ld+json"
@@ -112,7 +116,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
-      <body className="antialiased min-h-screen bg-[#F7F4EE] text-[#111111] flex flex-col justify-between selection:bg-[#B08D57]/20 selection:text-[#111111]">
+      <body
+        suppressHydrationWarning
+        className="antialiased min-h-screen bg-[#F7F4EE] text-[#111111] flex flex-col justify-between selection:bg-[#B08D57]/20 selection:text-[#111111]"
+      >
         <LenisProvider>
           <RouteScrollToTop />
           <AnnouncementBar />
