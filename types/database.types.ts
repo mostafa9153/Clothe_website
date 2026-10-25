@@ -963,6 +963,7 @@ export interface Order {
   hide_prices_on_invoice?: boolean;
   tracking_number: string | null;
   courier: string | null;
+  courier_name?: string | null;
   notes: string | null;
   created_at: string;
   items: OrderItem[];
@@ -1006,6 +1007,44 @@ export interface ActivityLog {
   actor: string;
   action: string;
   details: string;
+  created_at: string;
+}
+
+export interface Consultation {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  preferred_date: string;
+  preferred_time: string;
+  notes?: string;
+  status: ConsultationStatus;
+  created_at: string;
+}
+
+export interface ContactMessage {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  subject: string;
+  message: string;
+  status: ContactMessageStatus;
+  created_at: string;
+}
+
+export interface GiftCard {
+  id: string;
+  code: string;
+  initial_amount: number;
+  current_balance: number;
+  recipient_name: string;
+  recipient_email: string;
+  sender_name: string;
+  sender_email?: string;
+  message?: string;
+  is_active: boolean;
+  expires_at: string;
   created_at: string;
 }
 

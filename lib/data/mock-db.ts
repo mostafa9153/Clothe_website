@@ -15,6 +15,9 @@ import {
   OrderStatus,
   PaymentStatus,
   PaymentMethod,
+  Consultation,
+  ContactMessage,
+  GiftCard,
 } from "@/types/database.types";
 
 export const MOCK_CATEGORIES: Category[] = [
@@ -2851,19 +2854,43 @@ export function cancelMockOrder(orderId: string, reason: string = "Patron cancel
 export function updateMockOrderStatus(
   orderId: string,
   newStatus: OrderStatus,
-  note?: string,
-  courier?: string,
-  trackingNumber?: string
+  noteOrOptions?:
+    | string
+    | {
+        note?: string;
+        courier?: string;
+        courier_name?: string;
+        carrier?: string;
+        tracking_number?: string;
+        trackingNumber?: string;
+      },
+  courierArg?: string,
+  trackingNumberArg?: string
 ) {
   const order = MOCK_ORDERS.find((o) => o.id === orderId || o.order_number === orderId);
   if (!order) {
     throw new Error(`Order ${orderId} not found.`);
   }
 
+  const note = typeof noteOrOptions === "string" ? noteOrOptions : noteOrOptions?.note;
+  const courier =
+    typeof noteOrOptions === "object"
+      ? noteOrOptions.courier || noteOrOptions.carrier || noteOrOptions.courier_name
+      : courierArg;
+  const trackingNumber =
+    typeof noteOrOptions === "object"
+      ? noteOrOptions.tracking_number || noteOrOptions.trackingNumber
+      : trackingNumberArg;
+
   const now = new Date().toISOString();
   order.status = newStatus;
-  if (courier) order.courier = courier;
-  if (trackingNumber) order.tracking_number = trackingNumber;
+  if (courier) {
+    order.courier = courier;
+    order.courier_name = courier;
+  }
+  if (trackingNumber) {
+    order.tracking_number = trackingNumber;
+  }
 
   order.events.push({
     id: `ev-${Date.now()}`,
@@ -3029,6 +3056,208 @@ export function updateMockSiteSettings(updates: Partial<SiteSettings>) {
     created_at: new Date().toISOString(),
   });
   return MOCK_SITE_SETTINGS;
+}
+
+/**
+ * Contact Messages Mock DB & Management
+ */
+export const MOCK_CONTACT_MESSAGES: ContactMessage[] = [
+  {
+    id: "msg-01",
+    name: "Devika Rao",
+    email: "devika@rao.com",
+    phone: "+91 98200 44556",
+    subject: "Bespoke Silk Gown Sizing Inquiry",
+    message: "I am inquiring whether the Mulberry Silk Bias Slip Dress can be customized in length for an upcoming state gala.",
+    status: "in_progress",
+    created_at: new Date(Date.now() - 86400000 * 2).toISOString(),
+  },
+  {
+    id: "msg-02",
+    name: "Vikram Singhania",
+    email: "vikram@singhania.com",
+    phone: "+91 98111 22334",
+    subject: "Private Groom Wardrobe Appointment",
+    message: "Requesting private consultation in South Mumbai atelier for winter wedding collection.",
+    status: "resolved",
+    created_at: new Date(Date.now() - 86400000 * 4).toISOString(),
+  },
+];
+
+export function addMockContactMessage(data: {
+  name: string;
+  email: string;
+  phone?: string;
+  subject: string;
+  message: string;
+}): ContactMessage {
+  const newMsg: ContactMessage = {
+    id: `msg-${Date.now()}`,
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    subject: data.subject,
+    message: data.message,
+    status: "new",
+    created_at: new Date().toISOString(),
+  };
+  MOCK_CONTACT_MESSAGES.unshift(newMsg);
+  MOCK_ACTIVITY_LOGS.unshift({
+    id: `act-${Date.now()}`,
+    actor: data.name,
+    action: "Contact Inquiry Received",
+    details: `New message on: ${data.subject}`,
+    created_at: new Date().toISOString(),
+  });
+  return newMsg;
+}
+
+export function updateMockContactMessageStatus(id: string, status: ContactMessage["status"]) {
+  const msg = MOCK_CONTACT_MESSAGES.find((m) => m.id === id);
+  if (!msg) throw new Error("Contact message not found");
+  msg.status = status;
+  return msg;
+}
+
+/**
+ * Consultations Mock DB & Management
+ */
+export const MOCK_CONSULTATIONS: Consultation[] = [
+  {
+    id: "cons-01",
+    name: "Tanya Kapoor",
+    email: "tanya@kapoor.com",
+    phone: "+91 99000 11223",
+    preferred_date: new Date(Date.now() + 86400000 * 4).toISOString().slice(0, 10),
+    preferred_time: "15:00 - 16:30",
+    notes: "Looking for complete cashmere winter capsule.",
+    status: "confirmed",
+    created_at: new Date(Date.now() - 86400000 * 3).toISOString(),
+  },
+  {
+    id: "cons-02",
+    name: "Aditya Roy",
+    email: "aditya@roy.com",
+    phone: "+91 98765 11223",
+    preferred_date: new Date(Date.now() + 86400000 * 7).toISOString().slice(0, 10),
+    preferred_time: "11:00 - 12:30",
+    notes: "Italian wool tailoring consultation.",
+    status: "requested",
+    created_at: new Date(Date.now() - 86400000 * 1).toISOString(),
+  },
+];
+
+export function addMockConsultation(data: {
+  name: string;
+  email: string;
+  phone: string;
+  preferred_date: string;
+  preferred_time: string;
+  notes?: string;
+}): Consultation {
+  const newCons: Consultation = {
+    id: `cons-${Date.now()}`,
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    preferred_date: data.preferred_date,
+    preferred_time: data.preferred_time,
+    notes: data.notes,
+    status: "requested",
+    created_at: new Date().toISOString(),
+  };
+  MOCK_CONSULTATIONS.unshift(newCons);
+  MOCK_ACTIVITY_LOGS.unshift({
+    id: `act-${Date.now()}`,
+    actor: data.name,
+    action: "Consultation Booked",
+    details: `Private fitting requested for ${data.preferred_date} at ${data.preferred_time}`,
+    created_at: new Date().toISOString(),
+  });
+  return newCons;
+}
+
+export function updateMockConsultationStatus(id: string, status: Consultation["status"]) {
+  const cons = MOCK_CONSULTATIONS.find((c) => c.id === id);
+  if (!cons) throw new Error("Consultation record not found");
+  cons.status = status;
+  return cons;
+}
+
+/**
+ * Gift Cards Mock DB & Management
+ */
+export const MOCK_GIFT_CARDS: GiftCard[] = [
+  {
+    id: "gc-01",
+    code: "AURE-GIFT-5000-DEMO",
+    initial_amount: 5000,
+    current_balance: 5000,
+    recipient_name: "Esha Sharma",
+    recipient_email: "esha@example.com",
+    sender_name: "Rohan Varma",
+    sender_email: "rohan@example.com",
+    message: "A token of grace for your upcoming special milestone.",
+    is_active: true,
+    expires_at: new Date(Date.now() + 86400000 * 365).toISOString(),
+    created_at: new Date().toISOString(),
+  },
+];
+
+export function createMockGiftCard(data: {
+  amount: number;
+  recipient_name: string;
+  recipient_email: string;
+  sender_name: string;
+  sender_email?: string;
+  message?: string;
+}): GiftCard {
+  const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
+  const code = `AURE-${data.amount}-${randomSuffix}`;
+  const newCard: GiftCard = {
+    id: `gc-${Date.now()}`,
+    code,
+    initial_amount: data.amount,
+    current_balance: data.amount,
+    recipient_name: data.recipient_name,
+    recipient_email: data.recipient_email,
+    sender_name: data.sender_name,
+    sender_email: data.sender_email,
+    message: data.message,
+    is_active: true,
+    expires_at: new Date(Date.now() + 86400000 * 365).toISOString(),
+    created_at: new Date().toISOString(),
+  };
+  MOCK_GIFT_CARDS.unshift(newCard);
+  MOCK_ACTIVITY_LOGS.unshift({
+    id: `act-${Date.now()}`,
+    actor: data.sender_name,
+    action: "Gift Card Issued",
+    details: `Issued ₹${data.amount} card to ${data.recipient_email} (${code})`,
+    created_at: new Date().toISOString(),
+  });
+  return newCard;
+}
+
+export function redeemMockGiftCard(code: string, amount: number) {
+  if (typeof amount !== "number" || isNaN(amount) || amount <= 0) {
+    return { success: false, message: "Invalid redemption amount. Must be greater than 0." };
+  }
+
+  const card = MOCK_GIFT_CARDS.find((g) => g.code.toUpperCase() === code.trim().toUpperCase());
+  if (!card) return { success: false, message: "Gift card code not found." };
+  if (!card.is_active) return { success: false, message: "This gift card has been deactivated." };
+  if (new Date(card.expires_at) < new Date()) return { success: false, message: "This gift card has expired." };
+  if (card.current_balance <= 0) return { success: false, message: "Gift card balance has been fully redeemed." };
+
+  const deduction = Math.min(card.current_balance, amount);
+  card.current_balance -= deduction;
+  return {
+    success: true,
+    deduction,
+    remainingBalance: card.current_balance,
+    card,
+  };
 }
 
 

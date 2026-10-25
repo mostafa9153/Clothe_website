@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "tsx scripts/seed.ts"
+    "seed": "tsx scripts/seed.ts",
+    "audit:security": "tsx scripts/audit-security-rls.ts",
+    "verify:store": "tsx scripts/verify-full-store.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",

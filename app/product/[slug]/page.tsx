@@ -20,13 +20,18 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 
   const price = product.sale_price ?? product.base_price;
   const imageUrl = product.images[0]?.url || "";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://maisonaure.com";
 
   return {
     title: `${product.name} | ${brandConfig.name}`,
     description: product.short_desc || product.description || "",
+    alternates: {
+      canonical: `${siteUrl}/product/${product.slug}`,
+    },
     openGraph: {
       title: `${product.name} — ${brandConfig.name}`,
       description: product.short_desc || "",
+      url: `${siteUrl}/product/${product.slug}`,
       images: [
         {
           url: imageUrl,
@@ -80,7 +85,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
     },
     offers: {
       "@type": "Offer",
-      url: `https://maisonaure.com/product/${product.slug}`,
+      url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://maisonaure.com"}/product/${product.slug}`,
       priceCurrency: brandConfig.currency.code,
       price: product.sale_price ?? product.base_price,
       availability:

@@ -135,3 +135,14 @@ export const couponSchema = z.object({
   is_active: z.boolean().default(true),
 });
 export type CouponFormData = z.infer<typeof couponSchema>;
+
+export const giftCardSchema = z.object({
+  amount: z.number().int().min(1000, "Gift card minimum amount is ₹1,000"),
+  recipient_name: z.string().min(2, "Recipient name is required"),
+  recipient_email: z.string().email("Please enter a valid recipient email address"),
+  sender_name: z.string().min(2, "Sender name is required"),
+  sender_email: z.string().email("Please enter a valid sender email address").optional().or(z.literal("")),
+  message: z.string().max(300, "Message cannot exceed 300 characters").optional(),
+});
+export type GiftCardFormData = z.infer<typeof giftCardSchema>;
+

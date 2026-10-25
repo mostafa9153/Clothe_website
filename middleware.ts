@@ -1,10 +1,41 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
+import { checkRateLimit } from "@/lib/security/rate-limiter";
 
 const SESSION_COOKIE_NAME = "maison_patron_session";
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // Rate limit public API POST routes
+  if (request.method === "POST" && pathname.startsWith("/api/")) {
+    const ip =
+      request.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
+      request.headers.get("x-real-ip") ||
+      "127.0.0.1";
+
+    const rateResult = checkRateLimit(`${ip}:${pathname}`, {
+      windowMs: 60000,
+      maxRequests: 30,
+    });
+
+    if (!rateResult.success) {
+      return new NextResponse(
+        JSON.stringify({
+          error: "Too Many Requests",
+          message: "Please wait before attempting further requests.",
+          retryAfter: rateResult.resetSeconds,
+        }),
+        {
+          status: 429,
+          headers: {
+            "Content-Type": "application/json",
+            "Retry-After": rateResult.resetSeconds.toString(),
+          },
+        }
+      );
+    }
+  }
 
   // Let Supabase update cookies / tokens
   let response = await updateSession(request);

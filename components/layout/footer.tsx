@@ -126,12 +126,12 @@ export function Footer() {
               The Collections
             </p>
             <ul className="space-y-2 text-[#8A857C]">
-              <li><Link href="/category/dresses" className="hover:text-[#F7F4EE] transition-colors">Dresses & Silk Gowns</Link></li>
-              <li><Link href="/category/outerwear" className="hover:text-[#F7F4EE] transition-colors">Coats & Outerwear</Link></li>
-              <li><Link href="/category/trousers" className="hover:text-[#F7F4EE] transition-colors">Tailored Trousers</Link></li>
-              <li><Link href="/category/mens-shirts" className="hover:text-[#F7F4EE] transition-colors">Menswear Atelier</Link></li>
-              <li><Link href="/category/accessories" className="hover:text-[#F7F4EE] transition-colors">Artisanal Leather</Link></li>
+              <li><Link href="/shop" className="hover:text-[#F7F4EE] transition-colors">All Ready-to-Wear</Link></li>
+              <li><Link href="/lookbook" className="hover:text-[#F7F4EE] transition-colors">Winter Lookbook</Link></li>
               <li><Link href="/new-in" className="hover:text-[#F7F4EE] transition-colors">New In Pieces</Link></li>
+              <li><Link href="/collections" className="hover:text-[#F7F4EE] transition-colors">Featured Capsules</Link></li>
+              <li><Link href="/category/dresses" className="hover:text-[#F7F4EE] transition-colors">Silk Gowns & Dresses</Link></li>
+              <li><Link href="/category/mens-shirts" className="hover:text-[#F7F4EE] transition-colors">Menswear Atelier</Link></li>
             </ul>
           </div>
 
@@ -141,12 +141,13 @@ export function Footer() {
               Client Care
             </p>
             <ul className="space-y-2 text-[#8A857C]">
-              <li><Link href="/account" className="hover:text-[#F7F4EE] transition-colors">Order Tracking</Link></li>
-              <li><Link href="/contact" className="hover:text-[#F7F4EE] transition-colors">Bespoke Concierge</Link></li>
-              <li><Link href="/consultation" className="hover:text-[#F7F4EE] transition-colors">Stylist Appointment</Link></li>
-              <li><Link href="/policies/shipping" className="hover:text-[#F7F4EE] transition-colors">Shipping & Delivery</Link></li>
-              <li><Link href="/policies/returns" className="hover:text-[#F7F4EE] transition-colors">10-Day Returns Policy</Link></li>
-              <li><Link href="/policies/care" className="hover:text-[#F7F4EE] transition-colors">Textile Care Guide</Link></li>
+              <li><Link href="/contact" className="hover:text-[#F7F4EE] transition-colors">Atelier Concierge</Link></li>
+              <li><Link href="/book-consultation" className="hover:text-[#F7F4EE] transition-colors">Stylist Appointment</Link></li>
+              <li><Link href="/faq" className="hover:text-[#F7F4EE] transition-colors">FAQ & Assistance</Link></li>
+              <li><Link href="/size-guide" className="hover:text-[#F7F4EE] transition-colors">Size & Measurement</Link></li>
+              <li><Link href="/gift-cards" className="hover:text-[#F7F4EE] transition-colors">Atelier Gift Cards</Link></li>
+              <li><Link href="/shipping-returns" className="hover:text-[#F7F4EE] transition-colors">Shipping & Returns</Link></li>
+              <li><Link href="/care-guide" className="hover:text-[#F7F4EE] transition-colors">Textile Care Guide</Link></li>
             </ul>
           </div>
 
@@ -158,9 +159,11 @@ export function Footer() {
             <ul className="space-y-2 text-[#8A857C]">
               <li><Link href="/about" className="hover:text-[#F7F4EE] transition-colors">Atelier Heritage</Link></li>
               <li><Link href="/journal" className="hover:text-[#F7F4EE] transition-colors">The Journal</Link></li>
-              <li><Link href="/design-system" className="hover:text-[#F7F4EE] transition-colors">Design System Showcase</Link></li>
-              <li><Link href="/policies/privacy" className="hover:text-[#F7F4EE] transition-colors">Privacy Discretion</Link></li>
-              <li><Link href="/policies/terms" className="hover:text-[#F7F4EE] transition-colors">Terms of Commission</Link></li>
+              <li><Link href="/privacy-policy" className="hover:text-[#F7F4EE] transition-colors">Privacy Discretion</Link></li>
+              <li><Link href="/terms" className="hover:text-[#F7F4EE] transition-colors">Terms of Commission</Link></li>
+              <li><Link href="/refund-policy" className="hover:text-[#F7F4EE] transition-colors">Refund Policy</Link></li>
+              <li><Link href="/cookie-policy" className="hover:text-[#F7F4EE] transition-colors">Cookie Policy</Link></li>
+              <li><Link href="/sitemap" className="hover:text-[#F7F4EE] transition-colors">Store Sitemap</Link></li>
             </ul>
           </div>
         </div>

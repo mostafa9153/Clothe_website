@@ -14,8 +14,8 @@ const POLICY_TITLES: Record<string, { title: string; content: string }> = {
     content: brandConfig.policies.shippingAndReturns,
   },
   returns: {
-    title: "10-Day Doorstep Exchange & Returns",
-    content: "Maison Auré extends a gracious 10-day return window from the date of confirmed delivery. All returned garments must be unwashed, unworn, and enclosed in original protective dustbags with intact garment authentication seals. Our complimentary courier service will collect the parcel directly from your doorstep.",
+    title: `${brandConfig.returnWindowDays}-Day Doorstep Exchange & Returns`,
+    content: `${brandConfig.name} extends a gracious ${brandConfig.returnWindowDays}-day return window from the date of confirmed delivery. All returned garments must be unwashed, unworn, and enclosed in original protective dustbags with intact garment authentication seals. Our complimentary courier service will collect the parcel directly from your doorstep.`,
   },
   privacy: {
     title: "Client Privacy & Discretion",
@@ -32,6 +32,14 @@ const POLICY_TITLES: Record<string, { title: string; content: string }> = {
   authenticity: {
     title: "Artisanal Lineage & Authenticity",
     content: brandConfig.policies.authenticity,
+  },
+  refund: {
+    title: "Refund & Reimbursement Policy",
+    content: `Once inspected and verified at our atelier, refunds are credited back to the original payment source within 48 to 72 business hours in accordance with our ${brandConfig.returnWindowDays}-day return window.`,
+  },
+  cookie: {
+    title: "Cookie & Preference Policy",
+    content: `${brandConfig.name} uses minimal client-side cookies strictly necessary to maintain your shopping bag, authentication token, and site preferences without third-party tracking.`,
   },
 };
 

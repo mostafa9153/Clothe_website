@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createMockOrder } from "@/lib/data/mock-db";
 import { sendOrderPlacedEmail } from "@/lib/email";
 import { formatPrice } from "@/lib/utils";
+import brandConfig from "@/config/brand.config";
 import crypto from "crypto";
 
 export async function POST(req: Request) {
@@ -31,9 +32,10 @@ export async function POST(req: Request) {
     }
 
     // Atomic order creation & inventory decrement
+    const defaultGuestEmail = `guest@${brandConfig.name.toLowerCase().replace(/[^a-z]/g, "") || "maisonaure"}.com`;
     const order = createMockOrder({
       userId: userId || null,
-      guestEmail: guestEmail || "guest@maisonaure.com",
+      guestEmail: guestEmail || defaultGuestEmail,
       customerName: customerName || shippingAddress.name,
       paymentMethod: paymentMethod || "razorpay",
       shippingAddress,
@@ -60,7 +62,7 @@ export async function POST(req: Request) {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_maison_aure",
         amount: order.total * 100, // paisa
         currency: "INR",
-        name: "Maison Auré",
+        name: brandConfig.name,
         description: `Commission Reference ${order.order_number}`,
         order_id: razorpayOrderId,
         prefill: {

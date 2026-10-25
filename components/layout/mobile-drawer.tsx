@@ -208,6 +208,13 @@ export function MobileDrawer({ isOpen, onClose, categories, collections }: Mobil
                 New In
               </Link>
               <Link
+                href="/lookbook"
+                onClick={onClose}
+                className="block text-sm uppercase tracking-[0.18em] font-medium text-[#111111] hover:text-[#B08D57] transition-colors"
+              >
+                Winter Lookbook
+              </Link>
+              <Link
                 href="/sale"
                 onClick={onClose}
                 className="block text-sm uppercase tracking-[0.18em] font-medium text-[#B08D57] hover:text-[#111111] transition-colors"
@@ -220,6 +227,20 @@ export function MobileDrawer({ isOpen, onClose, categories, collections }: Mobil
                 className="block text-sm uppercase tracking-[0.18em] font-medium text-[#111111] hover:text-[#B08D57] transition-colors"
               >
                 The Atelier Journal
+              </Link>
+              <Link
+                href="/book-consultation"
+                onClick={onClose}
+                className="block text-sm uppercase tracking-[0.18em] font-medium text-[#111111] hover:text-[#B08D57] transition-colors"
+              >
+                Private Styling Appointment
+              </Link>
+              <Link
+                href="/size-guide"
+                onClick={onClose}
+                className="block text-sm uppercase tracking-[0.18em] font-medium text-[#8A857C] hover:text-[#111111] transition-colors"
+              >
+                Size Guide
               </Link>
               <Link
                 href="/shop"

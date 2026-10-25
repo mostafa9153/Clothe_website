@@ -117,6 +117,12 @@ export function Header() {
               Collections
             </Link>
             <Link
+              href="/lookbook"
+              className="py-1 hover:text-[#B08D57] transition-colors"
+            >
+              Lookbook
+            </Link>
+            <Link
               href="/journal"
               className="py-1 hover:text-[#B08D57] transition-colors"
             >

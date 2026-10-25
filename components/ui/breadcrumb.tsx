@@ -13,36 +13,55 @@ export interface BreadcrumbProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 export function Breadcrumb({ items, className, ...props }: BreadcrumbProps) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://maisonaure.com";
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.label,
+      ...(item.href ? { item: item.href.startsWith("http") ? item.href : `${siteUrl}${item.href}` } : {}),
+    })),
+  };
+
   return (
-    <nav
-      aria-label="Breadcrumb"
-      className={cn("flex items-center text-xs tracking-wider uppercase text-[#8A857C]", className)}
-      {...props}
-    >
-      <ol className="flex items-center space-x-2">
-        {items.map((item, index) => {
-          const isLast = index === items.length - 1;
-          return (
-            <li key={index} className="flex items-center space-x-2">
-              {item.href && !isLast ? (
-                <Link
-                  href={item.href}
-                  className="hover:text-[#111111] transition-colors"
-                >
-                  {item.label}
-                </Link>
-              ) : (
-                <span className={cn(isLast ? "text-[#111111] font-medium" : "")}>
-                  {item.label}
-                </span>
-              )}
-              {!isLast && (
-                <ChevronRight className="h-3 w-3 stroke-[1.25] text-[#8A857C]/60" />
-              )}
-            </li>
-          );
-        })}
-      </ol>
-    </nav>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <nav
+        aria-label="Breadcrumb"
+        className={cn("flex items-center text-xs tracking-wider uppercase text-[#8A857C]", className)}
+        {...props}
+      >
+        <ol className="flex items-center space-x-2">
+          {items.map((item, index) => {
+            const isLast = index === items.length - 1;
+            return (
+              <li key={index} className="flex items-center space-x-2">
+                {item.href && !isLast ? (
+                  <Link
+                    href={item.href}
+                    className="hover:text-[#111111] transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <span className={cn(isLast ? "text-[#111111] font-medium" : "")}>
+                    {item.label}
+                  </span>
+                )}
+                {!isLast && (
+                  <ChevronRight className="h-3 w-3 stroke-[1.25] text-[#8A857C]/60" />
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      </nav>
+    </>
   );
 }
