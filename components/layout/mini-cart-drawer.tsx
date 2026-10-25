@@ -59,22 +59,6 @@ export function MiniCartDrawer() {
     }
   };
 
-  const handleAddSample = () => {
-    addItem({
-      productId: "prod-002",
-      variantId: "var-002-s",
-      name: "Mulberry Silk Bias Slip Dress",
-      slug: "mulberry-silk-bias-slip-dress",
-      image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=400&q=80",
-      size: "S",
-      color: "Champagne",
-      price: 24500,
-      qty: 1,
-      maxStock: 5,
-      gstRate: 12,
-    });
-  };
-
   if (!isOpen) return null;
 
   return (
@@ -142,13 +126,6 @@ export function MiniCartDrawer() {
                 >
                   <Link href="/shop">Explore New In</Link>
                 </Button>
-                {/* Dev convenience button for testing */}
-                <button
-                  onClick={handleAddSample}
-                  className="text-[11px] uppercase tracking-wider text-[#B08D57] hover:underline pt-2"
-                >
-                  + Add Sample Silk Dress (Demo)
-                </button>
               </div>
             </div>
           ) : (

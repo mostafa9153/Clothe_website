@@ -46,6 +46,7 @@ export interface BrandConfig {
     freeAbove: number;          // ₹2999
     flatRate: number;           // ₹99
     codFee: number;             // ₹49
+    giftWrapFee: number;        // ₹250
     estimatedDays: string;      // "3–6 business days"
   };
   returnWindowDays: number;     // 10
@@ -106,6 +107,7 @@ export const brandConfig: BrandConfig = {
     freeAbove: 2999,
     flatRate: 99,
     codFee: 49,
+    giftWrapFee: 250,
     estimatedDays: "3–6 business days",
   },
   returnWindowDays: 10,

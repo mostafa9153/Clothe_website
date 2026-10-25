@@ -1,4 +1,21 @@
-import { Category, Collection, Product, Review, Coupon, JournalPost } from "@/types/database.types";
+import {
+  Category,
+  Collection,
+  Product,
+  Review,
+  Coupon,
+  JournalPost,
+  Order,
+  OrderItem,
+  OrderEvent,
+  Address,
+  ReturnRequest,
+  AbandonedCart,
+  ActivityLog,
+  OrderStatus,
+  PaymentStatus,
+  PaymentMethod,
+} from "@/types/database.types";
 
 export const MOCK_CATEGORIES: Category[] = [
   {
@@ -1629,6 +1646,18 @@ export function validateMockCoupon(code: string, subtotal: number) {
   if (!coupon) {
     return { valid: false, message: "Invalid or expired promotional code." };
   }
+
+  const now = new Date();
+  if (coupon.starts_at && new Date(coupon.starts_at) > now) {
+    return { valid: false, message: `Promotional code ${coupon.code} is not yet active.` };
+  }
+  if (coupon.expires_at && new Date(coupon.expires_at) < now) {
+    return { valid: false, message: `Promotional code ${coupon.code} has expired.` };
+  }
+  if (coupon.usage_limit !== null && coupon.usage_limit !== undefined && coupon.used_count >= coupon.usage_limit) {
+    return { valid: false, message: `Promotional code ${coupon.code} usage limit has been reached.` };
+  }
+
   if (subtotal < coupon.min_order) {
     return {
       valid: false,
@@ -1740,4 +1769,1267 @@ export function addMockReview(newReview: Omit<Review, "id" | "created_at"> & { i
   MOCK_REVIEWS.unshift(rev);
   return rev;
 }
+
+// ==============================================================================
+// USERS & PROFILES (Phase 7 & 9)
+// ==============================================================================
+export interface MockUser {
+  id: string;
+  email: string;
+  full_name: string;
+  phone: string;
+  role: "customer" | "admin";
+  avatar_url?: string;
+  password?: string;
+  created_at: string;
+}
+
+export const MOCK_USERS: MockUser[] = [
+  {
+    id: "user-customer-1",
+    email: "customer@demo.com",
+    full_name: "Alisha Singhania",
+    phone: "9876543210",
+    role: "customer",
+    password: "password123",
+    avatar_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+    created_at: "2026-01-15T10:00:00Z",
+  },
+  {
+    id: "user-admin-1",
+    email: "admin@demo.com",
+    full_name: "Marc Aurèle",
+    phone: "9988776655",
+    role: "admin",
+    password: "adminpassword123",
+    avatar_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+    created_at: "2026-01-01T10:00:00Z",
+  },
+];
+
+// ==============================================================================
+// SAVED ADDRESSES (Phase 7 & 8)
+// ==============================================================================
+export const MOCK_ADDRESSES: Address[] = [
+  {
+    id: "addr-001",
+    user_id: "user-customer-1",
+    name: "Alisha Singhania",
+    phone: "9876543210",
+    line1: "Apartment 14B, Sea Face Towers",
+    line2: "Worli Sea Face",
+    city: "Mumbai",
+    state: "Maharashtra",
+    pincode: "400018",
+    is_default: true,
+  },
+  {
+    id: "addr-002",
+    user_id: "user-customer-1",
+    name: "Alisha Singhania",
+    phone: "9876543210",
+    line1: "Villa 7, Altinho Hill Residences",
+    line2: "Near Bishop Palace",
+    city: "Panaji",
+    state: "Goa",
+    pincode: "403001",
+    is_default: false,
+  },
+];
+
+// ==============================================================================
+// ORDERS & TIMELINE (Phase 7, 8, 9)
+// ==============================================================================
+export const MOCK_ORDERS: Order[] = [
+  {
+    id: "ord-001",
+    order_number: "MA-2026-000101",
+    user_id: "user-customer-1",
+    guest_email: "customer@demo.com",
+    customer_name: "Alisha Singhania",
+    status: "delivered",
+    payment_method: "razorpay",
+    payment_status: "paid",
+    razorpay_order_id: "order_mock_001",
+    razorpay_payment_id: "pay_mock_001",
+    subtotal: 24500,
+    discount: 2450,
+    shipping: 0,
+    cod_fee: 0,
+    gst_total: 2625,
+    total: 22050,
+    coupon_code: "WELCOME10",
+    shipping_address: MOCK_ADDRESSES[0],
+    gift_wrap: true,
+    gift_message: "Happy Anniversary, with love.",
+    tracking_number: "BD-88231019",
+    courier: "BlueDart Express",
+    notes: "Please call on arrival",
+    created_at: "2026-02-14T11:20:00Z",
+    items: [
+      {
+        id: "item-001",
+        order_id: "ord-001",
+        product_id: "prod-002",
+        variant_id: "var-002-s",
+        name: "Mulberry Silk Bias Slip Dress",
+        image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=400&q=80",
+        size: "S",
+        color: "Champagne",
+        qty: 1,
+        unit_price: 24500,
+        gst_rate: 12,
+      },
+    ],
+    events: [
+      { id: "ev-01-1", order_id: "ord-001", status: "pending", note: "Order placed & payment verified", created_at: "2026-02-14T11:20:00Z" },
+      { id: "ev-01-2", order_id: "ord-001", status: "confirmed", note: "Commission confirmed by atelier master", created_at: "2026-02-14T12:00:00Z" },
+      { id: "ev-01-3", order_id: "ord-001", status: "processing", note: "Garment hand-pressed and packaged in luxury gift box", created_at: "2026-02-15T09:30:00Z" },
+      { id: "ev-01-4", order_id: "ord-001", status: "shipped", note: "Dispatched via BlueDart Express (BD-88231019)", created_at: "2026-02-15T15:00:00Z" },
+      { id: "ev-01-5", order_id: "ord-001", status: "delivered", note: "Delivered to Worli residence with signature", created_at: "2026-02-17T14:45:00Z" },
+    ],
+  },
+  {
+    id: "ord-002",
+    order_number: "MA-2026-000102",
+    user_id: "user-customer-1",
+    guest_email: "customer@demo.com",
+    customer_name: "Alisha Singhania",
+    status: "shipped",
+    payment_method: "razorpay",
+    payment_status: "paid",
+    razorpay_order_id: "order_mock_002",
+    razorpay_payment_id: "pay_mock_002",
+    subtotal: 28800,
+    discount: 500,
+    shipping: 0,
+    cod_fee: 0,
+    gst_total: 3086,
+    total: 28300,
+    coupon_code: "LUXE500",
+    shipping_address: MOCK_ADDRESSES[0],
+    gift_wrap: false,
+    gift_message: null,
+    tracking_number: "DL-9910442",
+    courier: "Delhivery Air",
+    notes: null,
+    created_at: "2026-02-23T16:40:00Z",
+    items: [
+      {
+        id: "item-002",
+        order_id: "ord-002",
+        product_id: "prod-001",
+        variant_id: "var-001-m",
+        name: "The Sculpted Trench Coat",
+        image: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=400&q=80",
+        size: "M",
+        color: "Camel",
+        qty: 1,
+        unit_price: 28800,
+        gst_rate: 12,
+      },
+    ],
+    events: [
+      { id: "ev-02-1", order_id: "ord-002", status: "pending", note: "Order placed & settled", created_at: "2026-02-23T16:40:00Z" },
+      { id: "ev-02-2", order_id: "ord-002", status: "confirmed", note: "Verified by atelier", created_at: "2026-02-23T17:15:00Z" },
+      { id: "ev-02-3", order_id: "ord-002", status: "processing", note: "Passed strict quality & finishing inspection", created_at: "2026-02-24T10:00:00Z" },
+      { id: "ev-02-4", order_id: "ord-002", status: "shipped", note: "Handed to Delhivery Air (DL-9910442)", created_at: "2026-02-24T18:00:00Z" },
+    ],
+  },
+  {
+    id: "ord-003",
+    order_number: "MA-2026-000103",
+    user_id: "user-customer-1",
+    guest_email: "customer@demo.com",
+    customer_name: "Alisha Singhania",
+    status: "processing",
+    payment_method: "razorpay",
+    payment_status: "paid",
+    razorpay_order_id: "order_mock_003",
+    razorpay_payment_id: "pay_mock_003",
+    subtotal: 58000,
+    discount: 5000,
+    shipping: 0,
+    cod_fee: 0,
+    gst_total: 6214,
+    total: 53000,
+    coupon_code: "AURÉ15",
+    shipping_address: MOCK_ADDRESSES[0],
+    gift_wrap: true,
+    gift_message: "Maison Auré bespoke wardrobe edition.",
+    tracking_number: null,
+    courier: null,
+    notes: null,
+    created_at: "2026-02-25T09:15:00Z",
+    items: [
+      {
+        id: "item-003",
+        order_id: "ord-003",
+        product_id: "prod-004",
+        variant_id: "var-004-s",
+        name: "Double-Breasted Cashmere Overcoat",
+        image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80",
+        size: "S",
+        color: "Oatmeal",
+        qty: 1,
+        unit_price: 58000,
+        gst_rate: 12,
+      },
+    ],
+    events: [
+      { id: "ev-03-1", order_id: "ord-003", status: "pending", note: "Payment authorized", created_at: "2026-02-25T09:15:00Z" },
+      { id: "ev-03-2", order_id: "ord-003", status: "confirmed", note: "Allocation assigned from Florence inventory", created_at: "2026-02-25T10:00:00Z" },
+      { id: "ev-03-3", order_id: "ord-003", status: "processing", note: "Steamed & packaged in atelier garment bag", created_at: "2026-02-25T14:30:00Z" },
+    ],
+  },
+  {
+    id: "ord-004",
+    order_number: "MA-2026-000104",
+    user_id: null,
+    guest_email: "rohan.mehta@outlook.com",
+    customer_name: "Rohan Mehta",
+    status: "confirmed",
+    payment_method: "cod",
+    payment_status: "pending",
+    razorpay_order_id: null,
+    razorpay_payment_id: null,
+    subtotal: 16500,
+    discount: 0,
+    shipping: 0,
+    cod_fee: 49,
+    gst_total: 1768,
+    total: 16549,
+    coupon_code: null,
+    shipping_address: {
+      id: "addr-004",
+      name: "Rohan Mehta",
+      phone: "9820011223",
+      line1: "42 Golf Links Avenue",
+      line2: "Near Lodhi Gardens",
+      city: "New Delhi",
+      state: "Delhi",
+      pincode: "110003",
+      is_default: true,
+    },
+    gift_wrap: false,
+    gift_message: null,
+    tracking_number: null,
+    courier: null,
+    notes: "Leave with building reception if unavailable",
+    created_at: "2026-02-25T11:45:00Z",
+    items: [
+      {
+        id: "item-004",
+        order_id: "ord-004",
+        product_id: "prod-006",
+        variant_id: "var-006-32",
+        name: "Pleated Wool Wide-Leg Trousers",
+        image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=400&q=80",
+        size: "32",
+        color: "Obsidian",
+        qty: 1,
+        unit_price: 16500,
+        gst_rate: 12,
+      },
+    ],
+    events: [
+      { id: "ev-04-1", order_id: "ord-004", status: "pending", note: "COD Order Placed", created_at: "2026-02-25T11:45:00Z" },
+      { id: "ev-04-2", order_id: "ord-004", status: "confirmed", note: "Phone verification completed by concierge", created_at: "2026-02-25T12:30:00Z" },
+    ],
+  },
+  {
+    id: "ord-005",
+    order_number: "MA-2026-000105",
+    user_id: null,
+    guest_email: "priya.kapoor@gmail.com",
+    customer_name: "Priya Kapoor",
+    status: "pending",
+    payment_method: "razorpay",
+    payment_status: "paid",
+    razorpay_order_id: "order_mock_005",
+    razorpay_payment_id: "pay_mock_005",
+    subtotal: 12000,
+    discount: 1200,
+    shipping: 0,
+    cod_fee: 0,
+    gst_total: 1286,
+    total: 10800,
+    coupon_code: "WELCOME10",
+    shipping_address: {
+      id: "addr-005",
+      name: "Priya Kapoor",
+      phone: "9819922334",
+      line1: "Flat 502, Orchid Heights",
+      line2: "Koregaon Park",
+      city: "Pune",
+      state: "Maharashtra",
+      pincode: "411001",
+      is_default: true,
+    },
+    gift_wrap: false,
+    gift_message: null,
+    tracking_number: null,
+    courier: null,
+    notes: null,
+    created_at: "2026-02-25T15:20:00Z",
+    items: [
+      {
+        id: "item-005",
+        order_id: "ord-005",
+        product_id: "prod-003",
+        variant_id: "var-003-m",
+        name: "Raw Silk Relaxed Overshirt",
+        image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+        size: "M",
+        color: "Ecru",
+        qty: 1,
+        unit_price: 12000,
+        gst_rate: 12,
+      },
+    ],
+    events: [
+      { id: "ev-05-1", order_id: "ord-005", status: "pending", note: "Order placed awaiting concierge review", created_at: "2026-02-25T15:20:00Z" },
+    ],
+  },
+  {
+    id: "ord-006",
+    order_number: "MA-2026-000106",
+    user_id: "user-customer-1",
+    guest_email: "customer@demo.com",
+    customer_name: "Alisha Singhania",
+    status: "delivered",
+    payment_method: "razorpay",
+    payment_status: "paid",
+    razorpay_order_id: "order_mock_006",
+    razorpay_payment_id: "pay_mock_006",
+    subtotal: 42000,
+    discount: 0,
+    shipping: 0,
+    cod_fee: 0,
+    gst_total: 4500,
+    total: 42000,
+    coupon_code: null,
+    shipping_address: MOCK_ADDRESSES[0],
+    gift_wrap: true,
+    gift_message: "For our travels.",
+    tracking_number: "BD-7711209",
+    courier: "BlueDart Express",
+    notes: null,
+    created_at: "2026-01-20T10:00:00Z",
+    items: [
+      {
+        id: "item-006",
+        order_id: "ord-006",
+        product_id: "prod-008",
+        variant_id: "var-008-os",
+        name: "Tuscan Leather Weekender",
+        image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=400&q=80",
+        size: "One Size",
+        color: "Espresso",
+        qty: 1,
+        unit_price: 42000,
+        gst_rate: 12,
+      },
+    ],
+    events: [
+      { id: "ev-06-1", order_id: "ord-006", status: "pending", note: "Order placed", created_at: "2026-01-20T10:00:00Z" },
+      { id: "ev-06-2", order_id: "ord-006", status: "shipped", note: "Dispatched with leather care wax kit", created_at: "2026-01-21T11:00:00Z" },
+      { id: "ev-06-3", order_id: "ord-006", status: "delivered", note: "Delivered to Worli residence", created_at: "2026-01-23T16:00:00Z" },
+    ],
+  },
+  {
+    id: "ord-007",
+    order_number: "MA-2026-000107",
+    user_id: "user-customer-1",
+    guest_email: "customer@demo.com",
+    customer_name: "Alisha Singhania",
+    status: "cancelled",
+    payment_method: "razorpay",
+    payment_status: "refunded",
+    razorpay_order_id: "order_mock_007",
+    razorpay_payment_id: "pay_mock_007",
+    subtotal: 18500,
+    discount: 1850,
+    shipping: 0,
+    cod_fee: 0,
+    gst_total: 1982,
+    total: 16650,
+    coupon_code: "WELCOME10",
+    shipping_address: MOCK_ADDRESSES[0],
+    gift_wrap: false,
+    gift_message: null,
+    tracking_number: null,
+    courier: null,
+    notes: "Cancelled by patron prior to cutting",
+    created_at: "2026-02-01T09:00:00Z",
+    items: [
+      {
+        id: "item-007",
+        order_id: "ord-007",
+        product_id: "prod-005",
+        variant_id: "var-005-s",
+        name: "Fine Irish Linen Leisure Shirt",
+        image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=400&q=80",
+        size: "S",
+        color: "White",
+        qty: 1,
+        unit_price: 18500,
+        gst_rate: 12,
+      },
+    ],
+    events: [
+      { id: "ev-07-1", order_id: "ord-007", status: "pending", note: "Order placed", created_at: "2026-02-01T09:00:00Z" },
+      { id: "ev-07-2", order_id: "ord-007", status: "cancelled", note: "Patron requested cancellation. Inventory restored to stock.", created_at: "2026-02-01T10:30:00Z" },
+    ],
+  },
+  {
+    id: "ord-008",
+    order_number: "MA-2026-000108",
+    user_id: null,
+    guest_email: "tanya.sharma@gmail.com",
+    customer_name: "Tanya Sharma",
+    status: "delivered",
+    payment_method: "razorpay",
+    payment_status: "paid",
+    razorpay_order_id: "order_mock_008",
+    razorpay_payment_id: "pay_mock_008",
+    subtotal: 14500,
+    discount: 500,
+    shipping: 0,
+    cod_fee: 0,
+    gst_total: 1554,
+    total: 14000,
+    coupon_code: "LUXE500",
+    shipping_address: {
+      id: "addr-008",
+      name: "Tanya Sharma",
+      phone: "9871133445",
+      line1: "B-12 Defence Colony",
+      line2: "Ring Road",
+      city: "New Delhi",
+      state: "Delhi",
+      pincode: "110024",
+      is_default: true,
+    },
+    gift_wrap: false,
+    gift_message: null,
+    tracking_number: "BD-6644201",
+    courier: "BlueDart Express",
+    notes: null,
+    created_at: "2026-02-18T13:10:00Z",
+    items: [
+      {
+        id: "item-008",
+        order_id: "ord-008",
+        product_id: "prod-007",
+        variant_id: "var-007-m",
+        name: "Fine Gauge Cashmere Crewneck",
+        image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=400&q=80",
+        size: "M",
+        color: "Stone Grey",
+        qty: 1,
+        unit_price: 14500,
+        gst_rate: 12,
+      },
+    ],
+    events: [
+      { id: "ev-08-1", order_id: "ord-008", status: "pending", note: "Order placed", created_at: "2026-02-18T13:10:00Z" },
+      { id: "ev-08-2", order_id: "ord-008", status: "shipped", note: "Dispatched via BlueDart", created_at: "2026-02-19T10:00:00Z" },
+      { id: "ev-08-3", order_id: "ord-008", status: "delivered", note: "Delivered to Defence Colony", created_at: "2026-02-21T15:20:00Z" },
+    ],
+  },
+  {
+    id: "ord-009",
+    order_number: "MA-2026-000109",
+    user_id: null,
+    guest_email: "vikram.malhotra@yahoo.com",
+    customer_name: "Vikram Malhotra",
+    status: "shipped",
+    payment_method: "razorpay",
+    payment_status: "paid",
+    razorpay_order_id: "order_mock_009",
+    razorpay_payment_id: "pay_mock_009",
+    subtotal: 35000,
+    discount: 3500,
+    shipping: 0,
+    cod_fee: 0,
+    gst_total: 3750,
+    total: 31500,
+    coupon_code: "WELCOME10",
+    shipping_address: {
+      id: "addr-009",
+      name: "Vikram Malhotra",
+      phone: "9900112244",
+      line1: "Penthouse 4, Prestige Palms",
+      line2: "Indiranagar",
+      city: "Bengaluru",
+      state: "Karnataka",
+      pincode: "560038",
+      is_default: true,
+    },
+    gift_wrap: true,
+    gift_message: "To new beginnings.",
+    tracking_number: "DL-3388190",
+    courier: "Delhivery Air",
+    notes: null,
+    created_at: "2026-02-24T12:00:00Z",
+    items: [
+      {
+        id: "item-009",
+        order_id: "ord-009",
+        product_id: "prod-001",
+        variant_id: "var-001-l",
+        name: "The Sculpted Trench Coat",
+        image: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=400&q=80",
+        size: "L",
+        color: "Camel",
+        qty: 1,
+        unit_price: 35000,
+        gst_rate: 12,
+      },
+    ],
+    events: [
+      { id: "ev-09-1", order_id: "ord-009", status: "pending", note: "Order placed & verified", created_at: "2026-02-24T12:00:00Z" },
+      { id: "ev-09-2", order_id: "ord-009", status: "shipped", note: "Dispatched to Bengaluru Hub (DL-3388190)", created_at: "2026-02-25T08:30:00Z" },
+    ],
+  },
+  {
+    id: "ord-010",
+    order_number: "MA-2026-000110",
+    user_id: "user-customer-1",
+    guest_email: "customer@demo.com",
+    customer_name: "Alisha Singhania",
+    status: "delivered",
+    payment_method: "cod",
+    payment_status: "paid",
+    razorpay_order_id: null,
+    razorpay_payment_id: null,
+    subtotal: 18000,
+    discount: 0,
+    shipping: 0,
+    cod_fee: 49,
+    gst_total: 1928,
+    total: 18049,
+    coupon_code: null,
+    shipping_address: MOCK_ADDRESSES[0],
+    gift_wrap: false,
+    gift_message: null,
+    tracking_number: "BD-1122334",
+    courier: "BlueDart Express",
+    notes: null,
+    created_at: "2026-01-10T14:00:00Z",
+    items: [
+      {
+        id: "item-010",
+        order_id: "ord-010",
+        product_id: "prod-006",
+        variant_id: "var-006-30",
+        name: "Pleated Wool Wide-Leg Trousers",
+        image: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=400&q=80",
+        size: "30",
+        color: "Obsidian",
+        qty: 1,
+        unit_price: 18000,
+        gst_rate: 12,
+      },
+    ],
+    events: [
+      { id: "ev-10-1", order_id: "ord-010", status: "pending", note: "COD Order Placed", created_at: "2026-01-10T14:00:00Z" },
+      { id: "ev-10-2", order_id: "ord-010", status: "shipped", note: "Dispatched via BlueDart", created_at: "2026-01-11T10:00:00Z" },
+      { id: "ev-10-3", order_id: "ord-010", status: "delivered", note: "Delivered & COD collection reconciled", created_at: "2026-01-13T17:00:00Z" },
+    ],
+  },
+];
+
+// ==============================================================================
+// RETURN REQUESTS (Phase 7 & 9)
+// ==============================================================================
+export const MOCK_RETURNS: ReturnRequest[] = [
+  {
+    id: "ret-001",
+    order_id: "ord-001",
+    order_number: "MA-2026-000101",
+    order_item_id: "item-001",
+    reason: "fit_too_small",
+    notes: "I adore the champagne silk, but the ribcage measurement runs slightly tighter than expected. Would love to exchange for size M.",
+    status: "requested",
+    customer_name: "Alisha Singhania",
+    customer_email: "customer@demo.com",
+    created_at: "2026-02-18T10:00:00Z",
+  },
+  {
+    id: "ret-002",
+    order_id: "ord-008",
+    order_number: "MA-2026-000108",
+    order_item_id: "item-008",
+    reason: "colour_variation",
+    notes: "Stone grey looks slightly cooler under my lighting. Requesting store credit.",
+    status: "approved",
+    customer_name: "Tanya Sharma",
+    customer_email: "tanya.sharma@gmail.com",
+    created_at: "2026-02-22T11:30:00Z",
+  },
+];
+
+// ==============================================================================
+// ABANDONED CARTS (Phase 6 & 9)
+// ==============================================================================
+export const MOCK_ABANDONED_CARTS: AbandonedCart[] = [
+  {
+    id: "ac-001",
+    session_id: "sess_vip_9921",
+    email: "ananya.birla@outlook.com",
+    items: [
+      {
+        product_id: "prod-004",
+        variant_id: "var-004-m",
+        name: "Double-Breasted Cashmere Overcoat",
+        image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=400&q=80",
+        size: "M",
+        color: "Oatmeal",
+        price: 58000,
+        qty: 1,
+      },
+    ],
+    subtotal: 58000,
+    created_at: "2026-02-24T18:30:00Z",
+    updated_at: "2026-02-24T18:45:00Z",
+  },
+  {
+    id: "ac-002",
+    session_id: "sess_guest_4410",
+    email: "karan.j@gmail.com",
+    items: [
+      {
+        product_id: "prod-002",
+        variant_id: "var-002-s",
+        name: "Mulberry Silk Bias Slip Dress",
+        image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=400&q=80",
+        size: "S",
+        color: "Champagne",
+        price: 24500,
+        qty: 1,
+      },
+      {
+        product_id: "prod-003",
+        variant_id: "var-003-s",
+        name: "Raw Silk Relaxed Overshirt",
+        image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+        size: "S",
+        color: "Ecru",
+        price: 12000,
+        qty: 1,
+      },
+    ],
+    subtotal: 36500,
+    created_at: "2026-02-25T07:10:00Z",
+    updated_at: "2026-02-25T07:25:00Z",
+  },
+];
+
+// ==============================================================================
+// ADMINISTRATIVE ACTIVITY AUDIT LOG (Phase 9)
+// ==============================================================================
+export const MOCK_ACTIVITY_LOGS: ActivityLog[] = [
+  {
+    id: "act-001",
+    actor: "Marc Aurèle (Admin)",
+    action: "Order Status Update",
+    details: "Order MA-2026-000102 marked as Dispatched via Delhivery Air",
+    created_at: "2026-02-24T18:00:00Z",
+  },
+  {
+    id: "act-002",
+    actor: "Marc Aurèle (Admin)",
+    action: "Return Approved",
+    details: "Approved return request ret-002 for Order MA-2026-000108",
+    created_at: "2026-02-23T14:15:00Z",
+  },
+  {
+    id: "act-003",
+    actor: "Marc Aurèle (Admin)",
+    action: "Coupon Created",
+    details: "Created privilege coupon code VIP20 (20% off above ₹12,000)",
+    created_at: "2026-02-20T11:00:00Z",
+  },
+  {
+    id: "act-004",
+    actor: "Marc Aurèle (Admin)",
+    action: "Inventory Restocked",
+    details: "Added 5 units to Double-Breasted Cashmere Overcoat (Size S)",
+    created_at: "2026-02-19T09:30:00Z",
+  },
+];
+
+// ==============================================================================
+// SITE SETTINGS & HOMEPAGE BLOCKS (Phase 9)
+// ==============================================================================
+export interface SiteSettings {
+  store_name: string;
+  tagline: string;
+  announcement_messages: string[];
+  free_shipping_threshold: number;
+  flat_shipping_rate: number;
+  cod_enabled: boolean;
+  cod_fee: number;
+  cod_max_limit: number;
+  return_window_days: number;
+  gift_wrap_fee: number;
+  contact_email: string;
+  contact_phone: string;
+  whatsapp_number: string;
+  maintenance_mode: boolean;
+  serviceable_prefixes: string[];
+  hero_slides: Array<{
+    id: string;
+    title: string;
+    eyebrow: string;
+    image: string;
+    cta_primary: string;
+    cta_primary_link: string;
+    cta_secondary: string;
+    cta_secondary_link: string;
+  }>;
+}
+
+export let MOCK_SITE_SETTINGS: SiteSettings = {
+  store_name: "MAISON AURÉ",
+  tagline: "Haute Couture & Quiet Luxury Tailoring",
+  announcement_messages: [
+    "Complimentary insured courier on all commissions above ₹2,999",
+    "Private styling appointments available in Mumbai & New Delhi",
+    "The Riviera Atelier Collection is now in residence",
+  ],
+  free_shipping_threshold: 2999,
+  flat_shipping_rate: 99,
+  cod_enabled: true,
+  cod_fee: 49,
+  cod_max_limit: 50000,
+  return_window_days: 10,
+  gift_wrap_fee: 250,
+  contact_email: "concierge@maisonaure.com",
+  contact_phone: "+91 22 6900 1200",
+  whatsapp_number: "+919876543210",
+  maintenance_mode: false,
+  serviceable_prefixes: SERVICEABLE_PINCODE_PREFIXES,
+  hero_slides: [
+    {
+      id: "slide-1",
+      eyebrow: "S/S 2026 Collection",
+      title: "The Architecture of Quiet Poise",
+      image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=2000&q=90",
+      cta_primary: "Explore Collection",
+      cta_primary_link: "/shop",
+      cta_secondary: "View Lookbook",
+      cta_secondary_link: "/collections/the-riviera-atelier",
+    },
+    {
+      id: "slide-2",
+      eyebrow: "Artisanal Cashmere",
+      title: "Uncompromising Warmth & Purity",
+      image: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=2000&q=90",
+      cta_primary: "Shop Outerwear",
+      cta_primary_link: "/category/outerwear",
+      cta_secondary: "Read The Journal",
+      cta_secondary_link: "/journal",
+    },
+    {
+      id: "slide-3",
+      eyebrow: "Florence Tailoring",
+      title: "Hand-Stitched Italian Canvassing",
+      image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=2000&q=90",
+      cta_primary: "Explore Tailored",
+      cta_primary_link: "/category/mens-shirts",
+      cta_secondary: "Book Stylist",
+      cta_secondary_link: "/consultation",
+    },
+  ],
+};
+
+// ==============================================================================
+// CORE ATOMIC CART & ORDER ENGINES (Phase 6, 7, 8, 9)
+// ==============================================================================
+
+/**
+ * Validates cart items against live catalog prices and stock levels.
+ * Ensures client tampering never results in lower prices or overselling.
+ */
+export function validateCartItems(
+  items: Array<{
+    productId: string;
+    variantId: string;
+    name?: string;
+    slug?: string;
+    image?: string;
+    size?: string;
+    color?: string;
+    price: number;
+    qty: number;
+    maxStock?: number;
+    gstRate?: number;
+  }>
+) {
+  const correctedItems: Array<typeof items[0]> = [];
+  const messages: string[] = [];
+  let priceChanged = false;
+  let stockChanged = false;
+
+  for (const item of items) {
+    const product = MOCK_PRODUCTS.find((p) => p.id === item.productId);
+    if (!product || !product.is_active) {
+      messages.push(`"${item.name || "A selected piece"}" is no longer available in the atelier collection and has been removed.`);
+      stockChanged = true;
+      continue;
+    }
+
+    const variant = product.variants.find((v) => v.id === item.variantId);
+    if (!variant || variant.stock <= 0) {
+      messages.push(`"${product.name}" in ${item.size} (${item.color}) is currently sold out and has been removed from your bag.`);
+      stockChanged = true;
+      continue;
+    }
+
+    // Live authoritative price check
+    const livePrice = variant.price_override ?? product.sale_price ?? product.base_price;
+    if (item.price !== livePrice) {
+      priceChanged = true;
+      messages.push(`Price for "${product.name}" was adjusted to current atelier price (₹${livePrice.toLocaleString("en-IN")}).`);
+    }
+
+    // Live authoritative stock check
+    let validQty = item.qty;
+    if (validQty > variant.stock) {
+      stockChanged = true;
+      validQty = variant.stock;
+      messages.push(`Quantity for "${product.name}" was adjusted to available stock (${variant.stock} available).`);
+    }
+
+    correctedItems.push({
+      ...item,
+      name: product.name,
+      slug: product.slug,
+      image: item.image || product.images[0]?.url || "",
+      size: variant.size,
+      color: variant.color,
+      price: livePrice,
+      qty: validQty,
+      maxStock: variant.stock,
+      gstRate: product.gst_rate || 12,
+    });
+  }
+
+  const subtotal = correctedItems.reduce((acc, i) => acc + i.price * i.qty, 0);
+  const totalGst = correctedItems.reduce((sum, item) => {
+    const itemTotal = item.price * item.qty;
+    const rate = item.gstRate || 12;
+    const gstPortion = itemTotal - itemTotal / (1 + rate / 100);
+    return sum + Math.round(gstPortion);
+  }, 0);
+
+  return {
+    valid: !priceChanged && !stockChanged && correctedItems.length === items.length,
+    correctedItems,
+    messages,
+    priceChanged,
+    stockChanged,
+    subtotal,
+    totalGst,
+  };
+}
+
+/**
+ * Creates an order atomically:
+ * - Locks inventory row
+ * - Decrements variant stock
+ * - Decrements total product stock
+ * - Creates Order and OrderItem records
+ * - Appends first OrderEvent
+ */
+export function createMockOrder(orderData: {
+  userId?: string | null;
+  guestEmail: string;
+  customerName: string;
+  paymentMethod: PaymentMethod;
+  shippingAddress: Address;
+  deliveryMethod?: "standard" | "express";
+  giftWrap?: boolean;
+  giftMessage?: string | null;
+  hidePricesOnInvoice?: boolean;
+  couponCode?: string | null;
+  notes?: string | null;
+  items: Array<{
+    productId: string;
+    variantId: string;
+    name: string;
+    image: string;
+    size: string;
+    color: string;
+    qty: number;
+    price: number;
+    gstRate: number;
+  }>;
+}) {
+  // 1. Verify stock before committing
+  for (const item of orderData.items) {
+    const product = MOCK_PRODUCTS.find((p) => p.id === item.productId);
+    if (!product) {
+      throw new Error(`Product ${item.name} not found.`);
+    }
+    const variant = product.variants.find((v) => v.id === item.variantId);
+    if (!variant || variant.stock < item.qty) {
+      throw new Error(`Insufficient atelier stock for ${item.name} (${item.size}).`);
+    }
+  }
+
+  // 2. Decrement stock atomically
+  for (const item of orderData.items) {
+    const product = MOCK_PRODUCTS.find((p) => p.id === item.productId);
+    if (product) {
+      const variant = product.variants.find((v) => v.id === item.variantId);
+      if (variant) {
+        variant.stock -= item.qty;
+      }
+      product.total_stock = product.variants.reduce((acc, v) => acc + v.stock, 0);
+    }
+  }
+
+  // 3. Compute totals
+  const subtotal = orderData.items.reduce((sum, item) => sum + item.price * item.qty, 0);
+  let discount = 0;
+  if (orderData.couponCode) {
+    const couponRes = validateMockCoupon(orderData.couponCode, subtotal);
+    if (couponRes.valid && couponRes.discount) {
+      discount = couponRes.discount;
+      if (couponRes.coupon) {
+        couponRes.coupon.used_count += 1;
+      }
+    }
+  }
+
+  const shipping = subtotal >= MOCK_SITE_SETTINGS.free_shipping_threshold ? 0 : MOCK_SITE_SETTINGS.flat_shipping_rate;
+  const expressFee = orderData.deliveryMethod === "express" ? 250 : 0;
+  const codFee = orderData.paymentMethod === "cod" ? MOCK_SITE_SETTINGS.cod_fee : 0;
+  const giftWrapFee = orderData.giftWrap ? MOCK_SITE_SETTINGS.gift_wrap_fee : 0;
+
+  const gstTotal = orderData.items.reduce((sum, item) => {
+    const itemTotal = item.price * item.qty;
+    const rate = item.gstRate || 12;
+    const gstPortion = itemTotal - itemTotal / (1 + rate / 100);
+    return sum + Math.round(gstPortion);
+  }, 0);
+
+  const total = Math.max(0, subtotal - discount + shipping + expressFee + codFee + giftWrapFee);
+
+  // 4. Generate Order Reference
+  const seq = Math.floor(100000 + Math.random() * 900000);
+  const orderNumber = `MA-2026-${seq}`;
+  const orderId = `ord-gen-${Date.now()}`;
+  const now = new Date().toISOString();
+
+  const newOrder: Order = {
+    id: orderId,
+    order_number: orderNumber,
+    user_id: orderData.userId || null,
+    guest_email: orderData.guestEmail,
+    customer_name: orderData.customerName,
+    status: orderData.paymentMethod === "cod" ? "confirmed" : "pending",
+    payment_method: orderData.paymentMethod,
+    payment_status: orderData.paymentMethod === "cod" ? "pending" : "paid",
+    razorpay_order_id: orderData.paymentMethod === "razorpay" ? `order_rzp_${seq}` : null,
+    razorpay_payment_id: orderData.paymentMethod === "razorpay" ? `pay_rzp_${seq}` : null,
+    subtotal,
+    discount,
+    shipping: shipping + expressFee,
+    cod_fee: codFee,
+    gst_total: gstTotal,
+    total,
+    coupon_code: orderData.couponCode || null,
+    shipping_address: orderData.shippingAddress,
+    gift_wrap: Boolean(orderData.giftWrap),
+    gift_wrap_fee: giftWrapFee,
+    gift_message: orderData.giftMessage || null,
+    hide_prices_on_invoice: Boolean(orderData.hidePricesOnInvoice),
+    tracking_number: null,
+    courier: null,
+    notes: orderData.notes || null,
+    created_at: now,
+    items: orderData.items.map((i, idx) => ({
+      id: `item-${seq}-${idx}`,
+      order_id: orderId,
+      product_id: i.productId,
+      variant_id: i.variantId,
+      name: i.name,
+      image: i.image,
+      size: i.size,
+      color: i.color,
+      qty: i.qty,
+      unit_price: i.price,
+      gst_rate: i.gstRate,
+    })),
+    events: [
+      {
+        id: `ev-${seq}-1`,
+        order_id: orderId,
+        status: orderData.paymentMethod === "cod" ? "confirmed" : "pending",
+        note: orderData.paymentMethod === "cod" ? "Cash on Delivery commission registered" : "Online settlement authorized via Razorpay Test Gateway",
+        created_at: now,
+      },
+    ],
+  };
+
+  MOCK_ORDERS.unshift(newOrder);
+
+  // Add audit log
+  MOCK_ACTIVITY_LOGS.unshift({
+    id: `act-${Date.now()}`,
+    actor: orderData.customerName,
+    action: "New Order Commissioned",
+    details: `Order ${orderNumber} placed for ₹${total.toLocaleString("en-IN")}`,
+    created_at: now,
+  });
+
+  return newOrder;
+}
+
+/**
+ * Restores product variant inventory atomically when an order is cancelled.
+ */
+export function cancelMockOrder(orderId: string, reason: string = "Patron cancellation") {
+  const order = MOCK_ORDERS.find((o) => o.id === orderId || o.order_number === orderId);
+  if (!order) {
+    throw new Error(`Order ${orderId} not found.`);
+  }
+
+  if (order.status === "cancelled") {
+    return { success: false, message: "Order is already cancelled." };
+  }
+
+  if (!["pending", "confirmed"].includes(order.status)) {
+    return { success: false, message: "Cannot cancel order once it has entered packing or courier dispatch." };
+  }
+
+  // Restock every item in the order
+  for (const item of order.items) {
+    const product = MOCK_PRODUCTS.find((p) => p.id === item.product_id);
+    if (product) {
+      const variant = product.variants.find((v) => v.id === item.variant_id);
+      if (variant) {
+        variant.stock += item.qty;
+      }
+      product.total_stock = product.variants.reduce((acc, v) => acc + v.stock, 0);
+    }
+  }
+
+  const now = new Date().toISOString();
+  order.status = "cancelled";
+  if (order.payment_status === "paid") {
+    order.payment_status = "refunded";
+  }
+
+  order.events.push({
+    id: `ev-cancel-${Date.now()}`,
+    order_id: order.id,
+    status: "cancelled",
+    note: `Order cancelled (${reason}). Inventory restocked to atelier reserve.`,
+    created_at: now,
+  });
+
+  MOCK_ACTIVITY_LOGS.unshift({
+    id: `act-${Date.now()}`,
+    actor: "Concierge System",
+    action: "Order Cancelled & Restocked",
+    details: `Order ${order.order_number} cancelled. Items restored to live stock.`,
+    created_at: now,
+  });
+
+  return { success: true, order };
+}
+
+/**
+ * Administrative order status update
+ */
+export function updateMockOrderStatus(
+  orderId: string,
+  newStatus: OrderStatus,
+  note?: string,
+  courier?: string,
+  trackingNumber?: string
+) {
+  const order = MOCK_ORDERS.find((o) => o.id === orderId || o.order_number === orderId);
+  if (!order) {
+    throw new Error(`Order ${orderId} not found.`);
+  }
+
+  const now = new Date().toISOString();
+  order.status = newStatus;
+  if (courier) order.courier = courier;
+  if (trackingNumber) order.tracking_number = trackingNumber;
+
+  order.events.push({
+    id: `ev-${Date.now()}`,
+    order_id: order.id,
+    status: newStatus,
+    note: note || `Order status updated to ${newStatus}`,
+    created_at: now,
+  });
+
+  MOCK_ACTIVITY_LOGS.unshift({
+    id: `act-${Date.now()}`,
+    actor: "Marc Aurèle (Admin)",
+    action: `Order Status: ${newStatus}`,
+    details: `Order ${order.order_number} transitioned to ${newStatus}`,
+    created_at: now,
+  });
+
+  return order;
+}
+
+/**
+ * Return requests handling
+ */
+export function addMockReturnRequest(data: {
+  orderId: string;
+  orderNumber: string;
+  orderItemId?: string;
+  reason: string;
+  notes?: string;
+  customerName?: string;
+  customerEmail?: string;
+}) {
+  const newReq: ReturnRequest = {
+    id: `ret-${Date.now()}`,
+    order_id: data.orderId,
+    order_number: data.orderNumber,
+    order_item_id: data.orderItemId,
+    reason: data.reason,
+    notes: data.notes,
+    status: "requested",
+    customer_name: data.customerName || "Patron",
+    customer_email: data.customerEmail || "customer@demo.com",
+    created_at: new Date().toISOString(),
+  };
+  MOCK_RETURNS.unshift(newReq);
+  return newReq;
+}
+
+export function updateMockReturnStatus(id: string, status: "approved" | "rejected" | "completed") {
+  const req = MOCK_RETURNS.find((r) => r.id === id);
+  if (!req) throw new Error("Return request not found");
+  req.status = status;
+  return req;
+}
+
+/**
+ * Abandoned cart recording
+ */
+export function recordMockAbandonedCart(data: {
+  sessionId: string;
+  email: string | null;
+  items: AbandonedCart["items"];
+  subtotal: number;
+}) {
+  const existing = MOCK_ABANDONED_CARTS.find((c) => c.session_id === data.sessionId);
+  const now = new Date().toISOString();
+  if (existing) {
+    existing.email = data.email || existing.email;
+    existing.items = data.items;
+    existing.subtotal = data.subtotal;
+    existing.updated_at = now;
+    return existing;
+  } else {
+    const newCart: AbandonedCart = {
+      id: `ac-${Date.now()}`,
+      session_id: data.sessionId,
+      email: data.email,
+      items: data.items,
+      subtotal: data.subtotal,
+      created_at: now,
+      updated_at: now,
+    };
+    MOCK_ABANDONED_CARTS.unshift(newCart);
+    return newCart;
+  }
+}
+
+/**
+ * Administrative Reviews Moderation
+ */
+export function moderateMockReview(id: string, action: "approve" | "reject" | "delete") {
+  const idx = MOCK_REVIEWS.findIndex((r) => r.id === id);
+  if (idx === -1) throw new Error("Review not found");
+  if (action === "delete") {
+    MOCK_REVIEWS.splice(idx, 1);
+    return true;
+  }
+  MOCK_REVIEWS[idx].is_approved = action === "approve";
+  return MOCK_REVIEWS[idx];
+}
+
+/**
+ * Administrative Product CRUD
+ */
+export function createMockProduct(newProd: Product) {
+  MOCK_PRODUCTS.unshift(newProd);
+  MOCK_ACTIVITY_LOGS.unshift({
+    id: `act-${Date.now()}`,
+    actor: "Admin",
+    action: "Product Created",
+    details: `Added new piece: ${newProd.name}`,
+    created_at: new Date().toISOString(),
+  });
+  return newProd;
+}
+
+export function updateMockProduct(id: string, updates: Partial<Product>) {
+  const idx = MOCK_PRODUCTS.findIndex((p) => p.id === id);
+  if (idx === -1) throw new Error("Product not found");
+  MOCK_PRODUCTS[idx] = { ...MOCK_PRODUCTS[idx], ...updates };
+  return MOCK_PRODUCTS[idx];
+}
+
+export function deleteMockProduct(id: string) {
+  const idx = MOCK_PRODUCTS.findIndex((p) => p.id === id);
+  if (idx === -1) return false;
+  MOCK_PRODUCTS.splice(idx, 1);
+  return true;
+}
+
+/**
+ * Administrative Coupon CRUD
+ */
+export function createMockCoupon(coupon: Coupon) {
+  MOCK_COUPONS.unshift(coupon);
+  return coupon;
+}
+
+export function updateMockCoupon(code: string, updates: Partial<Coupon>) {
+  const idx = MOCK_COUPONS.findIndex((c) => c.code.toUpperCase() === code.toUpperCase());
+  if (idx === -1) throw new Error("Coupon not found");
+  MOCK_COUPONS[idx] = { ...MOCK_COUPONS[idx], ...updates };
+  return MOCK_COUPONS[idx];
+}
+
+export function deleteMockCoupon(code: string) {
+  const idx = MOCK_COUPONS.findIndex((c) => c.code.toUpperCase() === code.toUpperCase());
+  if (idx === -1) return false;
+  MOCK_COUPONS.splice(idx, 1);
+  return true;
+}
+
+/**
+ * Administrative Site Settings CRUD
+ */
+export function updateMockSiteSettings(updates: Partial<SiteSettings>) {
+  MOCK_SITE_SETTINGS = { ...MOCK_SITE_SETTINGS, ...updates };
+  MOCK_ACTIVITY_LOGS.unshift({
+    id: `act-${Date.now()}`,
+    actor: "Admin",
+    action: "Site Settings Updated",
+    details: `Updated parameters: ${Object.keys(updates).join(", ")}`,
+    created_at: new Date().toISOString(),
+  });
+  return MOCK_SITE_SETTINGS;
+}
+
+
 

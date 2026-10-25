@@ -4,6 +4,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 interface WishlistState {
   productIds: string[];
   toggleWishlist: (productId: string) => boolean; // returns true if added, false if removed
+  removeFromWishlist: (productId: string) => void;
   isInWishlist: (productId: string) => boolean;
   clearWishlist: () => void;
   count: () => number;
@@ -24,6 +25,10 @@ export const useWishlistStore = create<WishlistState>()(
           set({ productIds: [...current, productId] });
           return true;
         }
+      },
+
+      removeFromWishlist: (productId: string) => {
+        set({ productIds: get().productIds.filter((id) => id !== productId) });
       },
 
       isInWishlist: (productId: string) => {

@@ -21,6 +21,8 @@ interface CartState {
   items: CartItem[];
   isOpen: boolean;
   giftWrap: boolean;
+  giftMessage: string;
+  orderNote: string;
   couponCode: string | null;
   discount: number;
   openCart: () => void;
@@ -30,9 +32,12 @@ interface CartState {
   removeItem: (id: string) => void;
   updateQty: (id: string, qty: number) => void;
   setGiftWrap: (val: boolean) => void;
+  setGiftMessage: (msg: string) => void;
+  setOrderNote: (note: string) => void;
   applyCoupon: (code: string, discount: number) => void;
   removeCoupon: () => void;
   clearCart: () => void;
+  syncValidatedCart: (validItems: CartItem[]) => void;
   // Computed helpers
   subtotal: () => number;
   shippingFee: () => number;
@@ -41,13 +46,14 @@ interface CartState {
   totalCount: () => number;
 }
 
-
 export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
       items: [],
       isOpen: false,
       giftWrap: false,
+      giftMessage: "",
+      orderNote: "",
       couponCode: null,
       discount: 0,
 
@@ -74,7 +80,6 @@ export const useCartStore = create<CartState>()(
 
       buyNowItem: (item) => {
         const id = `${item.productId}-${item.variantId}`;
-        // Sets cart to solely this single item, bypassing any previous items in the bag
         set({
           items: [{ ...item, id, qty: Math.min(item.qty, item.maxStock) }],
           isOpen: false,
@@ -100,12 +105,24 @@ export const useCartStore = create<CartState>()(
       },
 
       setGiftWrap: (val) => set({ giftWrap: val }),
+      setGiftMessage: (msg) => set({ giftMessage: msg.slice(0, 150) }),
+      setOrderNote: (note) => set({ orderNote: note.slice(0, 300) }),
 
-      applyCoupon: (code, discount) => set({ couponCode: code, discount }),
+      applyCoupon: (code, discount) => set({ couponCode: code.toUpperCase(), discount }),
 
       removeCoupon: () => set({ couponCode: null, discount: 0 }),
 
-      clearCart: () => set({ items: [], couponCode: null, discount: 0, giftWrap: false }),
+      clearCart: () =>
+        set({
+          items: [],
+          couponCode: null,
+          discount: 0,
+          giftWrap: false,
+          giftMessage: "",
+          orderNote: "",
+        }),
+
+      syncValidatedCart: (validItems) => set({ items: validItems }),
 
       subtotal: () => {
         return get().items.reduce((sum, item) => sum + item.price * item.qty, 0);
@@ -118,7 +135,6 @@ export const useCartStore = create<CartState>()(
       },
 
       totalGst: () => {
-        // GST-inclusive breakdown calculation
         return get().items.reduce((sum, item) => {
           const itemTotal = item.price * item.qty;
           const rate = item.gstRate || 12;
@@ -132,7 +148,8 @@ export const useCartStore = create<CartState>()(
         if (sub === 0) return 0;
         const ship = get().shippingFee();
         const disc = get().discount;
-        return Math.max(0, sub + ship - disc);
+        const giftWrapCost = get().giftWrap ? (brandConfig.shipping.giftWrapFee ?? 250) : 0;
+        return Math.max(0, sub + ship + giftWrapCost - disc);
       },
 
       totalCount: () => {
@@ -146,7 +163,6 @@ export const useCartStore = create<CartState>()(
           try {
             return window.localStorage;
           } catch {
-            // In case of privacy mode blocking localStorage
             return {
               getItem: () => null,
               setItem: () => {},
@@ -163,10 +179,11 @@ export const useCartStore = create<CartState>()(
       partialize: (state) => ({
         items: state.items,
         giftWrap: state.giftWrap,
+        giftMessage: state.giftMessage,
+        orderNote: state.orderNote,
         couponCode: state.couponCode,
         discount: state.discount,
       }),
     }
   )
 );
-

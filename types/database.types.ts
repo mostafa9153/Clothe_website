@@ -902,3 +902,110 @@ export interface JournalPost {
   is_published: boolean;
   created_at: string;
 }
+
+export interface Address {
+  id: string;
+  user_id?: string | null;
+  name: string;
+  phone: string;
+  line1: string;
+  line2?: string | null;
+  city: string;
+  state: string;
+  pincode: string;
+  is_default: boolean;
+}
+
+export interface OrderItem {
+  id: string;
+  order_id?: string;
+  product_id: string;
+  variant_id: string;
+  name: string;
+  image: string | null;
+  size: string;
+  color: string;
+  qty: number;
+  unit_price: number;
+  gst_rate: number;
+}
+
+export interface OrderEvent {
+  id: string;
+  order_id: string;
+  status: OrderStatus;
+  note: string | null;
+  created_at: string;
+}
+
+export interface Order {
+  id: string;
+  order_number: string;
+  user_id: string | null;
+  guest_email: string | null;
+  customer_name?: string;
+  status: OrderStatus;
+  payment_method: PaymentMethod;
+  payment_status: PaymentStatus;
+  razorpay_order_id?: string | null;
+  razorpay_payment_id?: string | null;
+  subtotal: number;
+  discount: number;
+  shipping: number;
+  cod_fee: number;
+  gst_total: number;
+  total: number;
+  coupon_code: string | null;
+  shipping_address: Address;
+  gift_wrap: boolean;
+  gift_wrap_fee?: number;
+  gift_message: string | null;
+  hide_prices_on_invoice?: boolean;
+  tracking_number: string | null;
+  courier: string | null;
+  notes: string | null;
+  created_at: string;
+  items: OrderItem[];
+  events: OrderEvent[];
+}
+
+export interface ReturnRequest {
+  id: string;
+  order_id: string;
+  order_number?: string;
+  order_item_id?: string;
+  reason: string;
+  notes?: string;
+  status: ReturnStatus;
+  created_at: string;
+  customer_name?: string;
+  customer_email?: string;
+}
+
+export interface AbandonedCart {
+  id: string;
+  session_id: string;
+  email: string | null;
+  items: Array<{
+    product_id: string;
+    variant_id: string;
+    name: string;
+    image: string;
+    size: string;
+    color: string;
+    price: number;
+    qty: number;
+  }>;
+  subtotal: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ActivityLog {
+  id: string;
+  actor: string;
+  action: string;
+  details: string;
+  created_at: string;
+}
+
