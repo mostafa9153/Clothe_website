@@ -25,43 +25,43 @@ export function MegaMenu({ categories, collections, isOpen, onClose }: MegaMenuP
         {/* Category Columns */}
         <div className="col-span-3 space-y-4">
           <p className="text-[11px] uppercase tracking-[0.2em] font-medium text-[#8A857C]">
-            Womenswear
+            Burkha & Modest Wear
           </p>
           <ul className="space-y-2.5 text-sm">
             <li>
               <Link
-                href="/category/dresses"
+                href="/category/burkha"
                 onClick={onClose}
                 className="text-[#111111] hover:text-[#B08D57] transition-colors"
               >
-                Dresses & Gowns
+                Burkha & Abaya
               </Link>
             </li>
             <li>
               <Link
-                href="/category/tops-shirts"
+                href="/category/abaya"
                 onClick={onClose}
                 className="text-[#111111] hover:text-[#B08D57] transition-colors"
               >
-                Tops & Silk Blouses
+                Abaya & Jilbab
               </Link>
             </li>
             <li>
               <Link
-                href="/category/outerwear"
+                href="/category/prayer-wear"
                 onClick={onClose}
                 className="text-[#111111] hover:text-[#B08D57] transition-colors"
               >
-                Coats & Outerwear
+                Prayer Wear & Khimar
               </Link>
             </li>
             <li>
               <Link
-                href="/category/trousers"
+                href="/category/sets-combos"
                 onClick={onClose}
                 className="text-[#111111] hover:text-[#B08D57] transition-colors"
               >
-                Trousers & Tailoring
+                Modest Sets & Combos
               </Link>
             </li>
           </ul>
@@ -69,16 +69,34 @@ export function MegaMenu({ categories, collections, isOpen, onClose }: MegaMenuP
 
         <div className="col-span-3 space-y-4">
           <p className="text-[11px] uppercase tracking-[0.2em] font-medium text-[#8A857C]">
-            Menswear & Artisanal
+            Hijab, Niqab & Panjabi
           </p>
           <ul className="space-y-2.5 text-sm">
             <li>
               <Link
-                href="/category/mens-shirts"
+                href="/category/hijab"
                 onClick={onClose}
                 className="text-[#111111] hover:text-[#B08D57] transition-colors"
               >
-                Tailored Shirts & Linen
+                Hijab & Stoles
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/category/niqab"
+                onClick={onClose}
+                className="text-[#111111] hover:text-[#B08D57] transition-colors"
+              >
+                Niqab & Veils
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/category/panjabi"
+                onClick={onClose}
+                className="text-[#111111] hover:text-[#B08D57] transition-colors"
+              >
+                Men&apos;s Panjabi & Jubba
               </Link>
             </li>
             <li>
@@ -87,16 +105,7 @@ export function MegaMenu({ categories, collections, isOpen, onClose }: MegaMenuP
                 onClick={onClose}
                 className="text-[#111111] hover:text-[#B08D57] transition-colors"
               >
-                Leather Goods & Totes
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/shop?sort=newest"
-                onClick={onClose}
-                className="text-[#111111] hover:text-[#B08D57] transition-colors"
-              >
-                New In This Season
+                Modest Accessories & Caps
               </Link>
             </li>
             <li>
@@ -105,7 +114,7 @@ export function MegaMenu({ categories, collections, isOpen, onClose }: MegaMenuP
                 onClick={onClose}
                 className="inline-flex items-center gap-1.5 text-[#B08D57] font-medium pt-2 group"
               >
-                <span>View Complete Atelier</span>
+                <span>View Complete Collection</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </li>
@@ -140,22 +149,22 @@ export function MegaMenu({ categories, collections, isOpen, onClose }: MegaMenuP
         {/* Visual Editorial Teaser */}
         <div className="col-span-3 relative h-60 overflow-hidden group">
           <Image
-            src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=600&q=80"
-            alt="The Riviera Atelier"
+            src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80"
+            alt="The Royal Eid Collection"
             fill
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex flex-col justify-end p-5 text-white">
             <span className="text-[10px] tracking-[0.2em] uppercase text-[#E8D8C8]">
-              Featured Editorial
+              Featured Atelier
             </span>
-            <h4 className="font-heading text-lg font-normal">The Riviera Atelier</h4>
+            <h4 className="font-heading text-lg font-normal">The Royal Eid Collection</h4>
             <Link
-              href="/collections/the-riviera-atelier"
+              href="/collections/eid-collection"
               onClick={onClose}
               className="text-xs tracking-wider uppercase underline underline-offset-4 mt-2 text-white/90 hover:text-white"
             >
-              Explore Collection
+              Discover The Drop
             </Link>
           </div>
         </div>

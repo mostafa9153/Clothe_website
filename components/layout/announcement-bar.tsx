@@ -7,9 +7,9 @@ import { useCartStore } from "@/store/cart-store";
 import { formatPrice } from "@/lib/utils";
 
 const DEFAULT_MESSAGES = [
-  `Complimentary white-glove courier across India on orders over ${formatPrice(brandConfig.shipping.freeAbove)}`,
-  "The Autumnal Solstice Drop — strictly limited to 50 numbered pieces worldwide",
-  "Private concierge styling & bespoke fittings available at Colaba Atelier",
+  `Complimentary delivery across India on orders over ${formatPrice(brandConfig.shipping.freeAbove)}`,
+  "Eid Collection — handcrafted in premium breathable Nida & Georgette",
+  "Custom sizes & bespoke tailoring available with doorstep exchange",
 ];
 
 export function AnnouncementBar() {
@@ -20,7 +20,7 @@ export function AnnouncementBar() {
 
   React.useEffect(() => {
     setMounted(true);
-    const dismissed = sessionStorage.getItem("maison_aure_announcement_dismissed");
+    const dismissed = sessionStorage.getItem("amzad_announcement_dismissed");
     if (dismissed === "true") {
       setIsVisible(false);
     }
@@ -38,13 +38,13 @@ export function AnnouncementBar() {
 
   const handleDismiss = () => {
     setIsVisible(false);
-    sessionStorage.setItem("maison_aure_announcement_dismissed", "true");
+    sessionStorage.setItem("amzad_announcement_dismissed", "true");
   };
 
   const remainingForFreeShipping = Math.max(0, brandConfig.shipping.freeAbove - subtotal);
 
   return (
-    <div className="relative bg-[#2B2E26] text-[#F7F4EE] px-4 py-2 text-xs font-normal tracking-wide transition-all duration-300">
+    <div className="relative bg-[#1F3A33] text-[#F7F4EE] px-4 py-2 text-xs font-normal tracking-wide transition-all duration-300">
       <div className="max-w-[1440px] mx-auto flex items-center justify-between">
         {/* Left spacer for symmetry */}
         <div className="hidden md:flex items-center gap-1 opacity-0 w-8"></div>

@@ -19,6 +19,7 @@ export const kashiAtelierConfig: BrandConfig = {
     hairline: "#E7E5E4",
     champagneGold: "#D97706", // Amber / Zari gold accent
     deepOlive: "#292524",     // Deep warm charcoal
+    deepEmerald: "#1F3A33",
   },
   fonts: {
     heading: "Playfair Display",

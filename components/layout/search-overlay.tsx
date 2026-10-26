@@ -16,11 +16,12 @@ interface SearchOverlayProps {
 }
 
 const TRENDING_SEARCHES = [
-  "Cashmere Overcoat",
-  "Mulberry Silk Dress",
-  "French Linen",
-  "Pleated Wool Trousers",
-  "Tuscan Leather Tote",
+  "Dubai Nida Burkha",
+  "Medina Silk Hijab",
+  "Saudi 3-Layer Niqab",
+  "Festive Eid Panjabi",
+  "Kabli Set",
+  "Prayer Dress",
 ];
 
 export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {

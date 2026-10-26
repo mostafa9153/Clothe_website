@@ -10,7 +10,7 @@ import {
 
 async function main() {
   console.log("==================================================================");
-  console.log("MAISON AURÉ — DATABASE SEED RUNNER");
+  console.log("AMZAD HAYA — DATABASE SEED RUNNER");
   console.log("==================================================================");
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -24,12 +24,12 @@ async function main() {
     console.log("  NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-anon-key>");
     console.log("  SUPABASE_SERVICE_ROLE_KEY=<your-service-role-key>");
     console.log("------------------------------------------------------------------");
-    console.log("✨ GOOD NEWS: Maison Auré includes an integrated typed fallback layer!");
-    console.log("The application runs 100% interactively right now with 24 products,");
-    console.log("6 categories, 4 collections, reviews, and working promo coupons.");
+    console.log("✨ GOOD NEWS: AMZAD HAYA includes an integrated typed fallback layer!");
+    console.log("The application runs 100% interactively right now with 30 Islamic products,");
+    console.log("8 categories (Burkha, Hijab, Niqab, Panjabi, etc.), reviews, and working promo coupons.");
     console.log("\nDEMO USER CREDENTIALS (for Auth/Admin testing):");
-    console.log("  • Admin:    admin@demo.com    / Pass: MaisonAure2026!");
-    console.log("  • Customer: customer@demo.com / Pass: ClientAure2026!");
+    console.log("  • Admin:    admin@demo.com    / Pass: AmzadHaya2026!");
+    console.log("  • Customer: customer@demo.com / Pass: ClientHaya2026!");
     console.log("==================================================================\n");
     return;
   }

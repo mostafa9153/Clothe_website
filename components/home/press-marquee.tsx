@@ -3,14 +3,14 @@
 import * as React from "react";
 
 const PRESS_NAMES = [
-  "VOGUE ATELIER",
-  "HARPER'S BAZAAR ARCHIVES",
-  "THE MONOCLE REPORT",
-  "ARCHITECTURAL DIGEST STYLE",
-  "ELLE HAUTE COUTURE",
-  "L'OFFICIEL CURATION",
-  "FINANCIAL TIMES HOW TO SPEND IT",
-  "ROBB REPORT LUXURY",
+  "PURE IMPORTED DUBAI NIDA",
+  "GRADE-6A FRENCH MEDINA SILK",
+  "HAND-EMBROIDERED IN KOLKATA",
+  "100% OPACITY & BREATHABILITY TESTED",
+  "CERTIFIED EGYPTIAN GIZA COTTON",
+  "CUSTOM MODEST SIZING AVAILABLE",
+  "EID & RAMADAN SPECIALS",
+  "PAN-INDIA EXPRESS COURIER",
 ];
 
 export function PressMarquee() {
@@ -18,7 +18,7 @@ export function PressMarquee() {
     <div className="w-full bg-[#FFFFFF] border-y border-[#E4DFD5] py-5 overflow-hidden select-none">
       <div className="max-w-[1440px] mx-auto px-6 mb-2 text-center">
         <span className="text-[10px] uppercase tracking-[0.25em] text-[#8A857C] font-medium">
-          As Featured & Critiqued In
+          Atelier Standards & Hallmarks
         </span>
       </div>
       <div className="flex w-max animate-marquee space-x-12 sm:space-x-16 items-center">

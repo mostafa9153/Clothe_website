@@ -43,41 +43,40 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-[#2B2E26] text-[#F7F4EE] pt-16 md:pt-24 pb-12 border-t border-[#3D4233]">
+    <footer className="bg-[#1F3A33] text-[#F7F4EE] pt-16 md:pt-24 pb-12 border-t border-[#2D4D44]">
       <div className="max-w-[1440px] mx-auto px-6 md:px-12">
-        {/* Top Newsletter & Atelier Invitation */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pb-16 border-b border-[#3D4233] items-start">
+        {/* Top Newsletter & Modest Circle Invitation */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pb-16 border-b border-[#2D4D44] items-start">
           <div className="lg:col-span-6 space-y-3">
             <span className="text-[11px] uppercase tracking-[0.25em] text-[#B08D57] font-medium">
-              Private Client Register
+              Join Amzad Haya
             </span>
             <h3 className="font-heading text-2xl sm:text-3xl font-normal tracking-wide">
-              Subscribe to the Atelier Dispatches
+              Subscribe for Modest Wear & Eid Previews
             </h3>
-            <p className="text-xs text-[#8A857C] max-w-md leading-relaxed">
-              Receive private previews of numbered drops, invitations to private appointments, and
-              curated fabric essays. Complimentary 10% welcome privilege applied upon registration.
+            <p className="text-xs text-[#E4DFD5]/80 max-w-md leading-relaxed">
+              Receive modest wardrobe guides, fabric care essays, and priority access to festive Eid collections. Enjoy a complimentary 10% welcome privilege on your first order.
             </p>
           </div>
 
           <div className="lg:col-span-6 w-full max-w-md lg:ml-auto">
             {status === "success" ? (
-              <div className="p-4 bg-[#3D4233]/60 border border-[#B08D57]/40 flex items-start gap-3">
+              <div className="p-4 bg-[#2D4D44]/60 border border-[#B08D57]/40 flex items-start gap-3">
                 <Check className="w-5 h-5 text-[#B08D57] flex-shrink-0 mt-0.5" />
                 <div className="text-xs space-y-1">
                   <p className="font-medium text-[#F7F4EE]">{feedback}</p>
-                  <p className="text-[#8A857C]">Use code <strong className="text-[#B08D57] tracking-wider">WELCOME10</strong> at checkout for 10% off your first commission.</p>
+                  <p className="text-[#E4DFD5]/70">Use code <strong className="text-[#B08D57] tracking-wider">WELCOME10</strong> or <strong className="text-[#B08D57] tracking-wider">EID10</strong> at checkout.</p>
                 </div>
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="space-y-2">
-                <div className="flex border-b border-[#8A857C] focus-within:border-[#B08D57] transition-colors pb-1.5">
+                <div className="flex border-b border-[#E4DFD5]/50 focus-within:border-[#B08D57] transition-colors pb-1.5">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email address..."
-                    className="w-full bg-transparent text-sm text-[#F7F4EE] placeholder:text-[#8A857C] focus:outline-none"
+                    className="w-full bg-transparent text-sm text-[#F7F4EE] placeholder:text-[#E4DFD5]/60 focus:outline-none"
                     disabled={status === "loading"}
                   />
                   <button
@@ -90,10 +89,10 @@ export function Footer() {
                   </button>
                 </div>
                 {status === "error" && (
-                  <p className="text-[11px] text-red-400">{feedback}</p>
+                  <p className="text-[11px] text-red-300">{feedback}</p>
                 )}
-                <span className="text-[10px] text-[#8A857C] block pt-1">
-                  By joining, you respect our quiet communication frequency (maximum 2 dispatches per month).
+                <span className="text-[10px] text-[#E4DFD5]/60 block pt-1">
+                  We respect your privacy. Maximum 2 respectful dispatches per month.
                 </span>
               </form>
             )}
@@ -101,7 +100,7 @@ export function Footer() {
         </div>
 
         {/* Navigation & Client Services Columns */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-8 py-16 border-b border-[#3D4233] text-xs">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-8 py-16 border-b border-[#2D4D44] text-xs">
           {/* Brand Info */}
           <div className="col-span-2 lg:col-span-4 space-y-4 pr-6">
             <Link
@@ -110,10 +109,10 @@ export function Footer() {
             >
               {brandConfig.logoText}
             </Link>
-            <p className="text-[#8A857C] text-xs leading-relaxed max-w-sm">
+            <p className="text-[#E4DFD5]/80 text-xs leading-relaxed max-w-sm">
               {brandConfig.description}
             </p>
-            <div className="text-[11px] text-[#8A857C] space-y-1 pt-1">
+            <div className="text-[11px] text-[#E4DFD5]/70 space-y-1 pt-1">
               <p>{brandConfig.contact.address}</p>
               <p>{brandConfig.contact.phone}</p>
               <p>{brandConfig.contact.email}</p>
@@ -123,15 +122,15 @@ export function Footer() {
           {/* Shop Column */}
           <div className="col-span-1 lg:col-span-3 space-y-3">
             <p className="text-[11px] uppercase tracking-[0.2em] font-medium text-[#B08D57]">
-              The Collections
+              Modest Wear
             </p>
-            <ul className="space-y-2 text-[#8A857C]">
-              <li><Link href="/shop" className="hover:text-[#F7F4EE] transition-colors">All Ready-to-Wear</Link></li>
-              <li><Link href="/lookbook" className="hover:text-[#F7F4EE] transition-colors">Winter Lookbook</Link></li>
-              <li><Link href="/new-in" className="hover:text-[#F7F4EE] transition-colors">New In Pieces</Link></li>
-              <li><Link href="/collections" className="hover:text-[#F7F4EE] transition-colors">Featured Capsules</Link></li>
-              <li><Link href="/category/dresses" className="hover:text-[#F7F4EE] transition-colors">Silk Gowns & Dresses</Link></li>
-              <li><Link href="/category/mens-shirts" className="hover:text-[#F7F4EE] transition-colors">Menswear Atelier</Link></li>
+            <ul className="space-y-2 text-[#E4DFD5]/80">
+              <li><Link href="/category/burkha" className="hover:text-[#F7F4EE] transition-colors">Burkha & Abaya</Link></li>
+              <li><Link href="/category/hijab" className="hover:text-[#F7F4EE] transition-colors">Hijabs & Stoles</Link></li>
+              <li><Link href="/category/niqab" className="hover:text-[#F7F4EE] transition-colors">Niqabs & Veils</Link></li>
+              <li><Link href="/category/panjabi" className="hover:text-[#F7F4EE] transition-colors">Panjabi & Jubba</Link></li>
+              <li><Link href="/new-in" className="hover:text-[#F7F4EE] transition-colors">New Modest Arrivals</Link></li>
+              <li><Link href="/collections" className="hover:text-[#F7F4EE] transition-colors">Eid & Festive Sets</Link></li>
             </ul>
           </div>
 
@@ -140,14 +139,13 @@ export function Footer() {
             <p className="text-[11px] uppercase tracking-[0.2em] font-medium text-[#B08D57]">
               Client Care
             </p>
-            <ul className="space-y-2 text-[#8A857C]">
-              <li><Link href="/contact" className="hover:text-[#F7F4EE] transition-colors">Atelier Concierge</Link></li>
-              <li><Link href="/book-consultation" className="hover:text-[#F7F4EE] transition-colors">Stylist Appointment</Link></li>
+            <ul className="space-y-2 text-[#E4DFD5]/80">
+              <li><Link href="/contact" className="hover:text-[#F7F4EE] transition-colors">Client Support</Link></li>
+              <li><Link href="/book-consultation" className="hover:text-[#F7F4EE] transition-colors">Custom Size Appointment</Link></li>
               <li><Link href="/faq" className="hover:text-[#F7F4EE] transition-colors">FAQ & Assistance</Link></li>
-              <li><Link href="/size-guide" className="hover:text-[#F7F4EE] transition-colors">Size & Measurement</Link></li>
-              <li><Link href="/gift-cards" className="hover:text-[#F7F4EE] transition-colors">Atelier Gift Cards</Link></li>
-              <li><Link href="/shipping-returns" className="hover:text-[#F7F4EE] transition-colors">Shipping & Returns</Link></li>
-              <li><Link href="/care-guide" className="hover:text-[#F7F4EE] transition-colors">Textile Care Guide</Link></li>
+              <li><Link href="/size-guide" className="hover:text-[#F7F4EE] transition-colors">Size & Measurement Guide</Link></li>
+              <li><Link href="/care-guide" className="hover:text-[#F7F4EE] transition-colors">Fabric & Care Guide</Link></li>
+              <li><Link href="/shipping-returns" className="hover:text-[#F7F4EE] transition-colors">Shipping & Exchange</Link></li>
             </ul>
           </div>
 

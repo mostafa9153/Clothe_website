@@ -52,7 +52,7 @@ export default function SizeGuidePage() {
                   : "bg-white text-[#8A857C] border-[#E4DFD5] hover:text-[#111111]"
               }`}
             >
-              Womenswear Atelier
+              Burkha &amp; Abaya Guide
             </button>
             <button
               onClick={() => setActiveGender("men")}
@@ -62,7 +62,7 @@ export default function SizeGuidePage() {
                   : "bg-white text-[#8A857C] border-[#E4DFD5] hover:text-[#111111]"
               }`}
             >
-              Menswear Atelier
+              Men&apos;s Panjabi &amp; Jubba
             </button>
           </div>
 
@@ -100,66 +100,54 @@ export default function SizeGuidePage() {
             <table className="w-full text-xs text-left text-[#111111]">
               <thead className="bg-[#F7F4EE] border-b border-[#E4DFD5] text-[10px] uppercase tracking-[0.18em] text-[#8A857C]">
                 <tr>
-                  <th className="py-4 px-6 font-medium">Atelier Size</th>
-                  <th className="py-4 px-6 font-medium">India / UK</th>
-                  <th className="py-4 px-6 font-medium">US</th>
-                  <th className="py-4 px-6 font-medium">EU</th>
-                  <th className="py-4 px-6 font-medium">Bust</th>
-                  <th className="py-4 px-6 font-medium">Waist</th>
-                  <th className="py-4 px-6 font-medium">Hips</th>
-                  <th className="py-4 px-6 font-medium">Dress Length</th>
+                  <th className="py-4 px-6 font-medium">Abaya Size</th>
+                  <th className="py-4 px-6 font-medium">Recommended Height</th>
+                  <th className="py-4 px-6 font-medium">Full Length</th>
+                  <th className="py-4 px-6 font-medium">Chest / Bust</th>
+                  <th className="py-4 px-6 font-medium">Sleeve Length</th>
+                  <th className="py-4 px-6 font-medium">Modest Drape</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#E4DFD5]">
                 <tr className="hover:bg-[#F7F4EE]/50 transition-colors">
-                  <td className="py-4 px-6 font-medium">XS</td>
-                  <td className="py-4 px-6 text-[#8A857C]">UK 6</td>
-                  <td className="py-4 px-6 text-[#8A857C]">US 2</td>
-                  <td className="py-4 px-6 text-[#8A857C]">EU 34</td>
-                  <td className="py-4 px-6">{val(82, 32.3)}</td>
-                  <td className="py-4 px-6">{val(64, 25.2)}</td>
-                  <td className="py-4 px-6">{val(90, 35.4)}</td>
-                  <td className="py-4 px-6">{val(126, 49.6)}</td>
-                </tr>
-                <tr className="hover:bg-[#F7F4EE]/50 transition-colors">
-                  <td className="py-4 px-6 font-medium">S</td>
-                  <td className="py-4 px-6 text-[#8A857C]">UK 8</td>
-                  <td className="py-4 px-6 text-[#8A857C]">US 4</td>
-                  <td className="py-4 px-6 text-[#8A857C]">EU 36</td>
-                  <td className="py-4 px-6">{val(86, 33.9)}</td>
-                  <td className="py-4 px-6">{val(68, 26.8)}</td>
-                  <td className="py-4 px-6">{val(94, 37.0)}</td>
-                  <td className="py-4 px-6">{val(128, 50.4)}</td>
-                </tr>
-                <tr className="hover:bg-[#F7F4EE]/50 transition-colors">
-                  <td className="py-4 px-6 font-medium">M</td>
-                  <td className="py-4 px-6 text-[#8A857C]">UK 10</td>
-                  <td className="py-4 px-6 text-[#8A857C]">US 6</td>
-                  <td className="py-4 px-6 text-[#8A857C]">EU 38</td>
-                  <td className="py-4 px-6">{val(91, 35.8)}</td>
-                  <td className="py-4 px-6">{val(73, 28.7)}</td>
-                  <td className="py-4 px-6">{val(99, 39.0)}</td>
-                  <td className="py-4 px-6">{val(130, 51.2)}</td>
-                </tr>
-                <tr className="hover:bg-[#F7F4EE]/50 transition-colors">
-                  <td className="py-4 px-6 font-medium">L</td>
-                  <td className="py-4 px-6 text-[#8A857C]">UK 12</td>
-                  <td className="py-4 px-6 text-[#8A857C]">US 8</td>
-                  <td className="py-4 px-6 text-[#8A857C]">EU 40</td>
-                  <td className="py-4 px-6">{val(97, 38.2)}</td>
-                  <td className="py-4 px-6">{val(79, 31.1)}</td>
-                  <td className="py-4 px-6">{val(105, 41.3)}</td>
+                  <td className="py-4 px-6 font-medium">Size 52</td>
+                  <td className="py-4 px-6 text-[#8A857C]">5&apos;0&quot; – 5&apos;2&quot;</td>
                   <td className="py-4 px-6">{val(132, 52.0)}</td>
+                  <td className="py-4 px-6">{val(106, 41.7)}</td>
+                  <td className="py-4 px-6">{val(66, 26.0)}</td>
+                  <td className="py-4 px-6 text-[#B08D57]">Floor Length</td>
                 </tr>
                 <tr className="hover:bg-[#F7F4EE]/50 transition-colors">
-                  <td className="py-4 px-6 font-medium">XL</td>
-                  <td className="py-4 px-6 text-[#8A857C]">UK 14</td>
-                  <td className="py-4 px-6 text-[#8A857C]">US 10</td>
-                  <td className="py-4 px-6 text-[#8A857C]">EU 42</td>
-                  <td className="py-4 px-6">{val(103, 40.6)}</td>
-                  <td className="py-4 px-6">{val(85, 33.5)}</td>
+                  <td className="py-4 px-6 font-medium">Size 54</td>
+                  <td className="py-4 px-6 text-[#8A857C]">5&apos;3&quot; – 5&apos;4&quot;</td>
+                  <td className="py-4 px-6">{val(137, 54.0)}</td>
                   <td className="py-4 px-6">{val(111, 43.7)}</td>
-                  <td className="py-4 px-6">{val(134, 52.8)}</td>
+                  <td className="py-4 px-6">{val(68, 26.8)}</td>
+                  <td className="py-4 px-6 text-[#B08D57]">Floor Length</td>
+                </tr>
+                <tr className="hover:bg-[#F7F4EE]/50 transition-colors">
+                  <td className="py-4 px-6 font-medium">Size 56</td>
+                  <td className="py-4 px-6 text-[#8A857C]">5&apos;5&quot; – 5&apos;6&quot;</td>
+                  <td className="py-4 px-6">{val(142, 56.0)}</td>
+                  <td className="py-4 px-6">{val(116, 45.7)}</td>
+                  <td className="py-4 px-6">{val(71, 28.0)}</td>
+                  <td className="py-4 px-6 text-[#B08D57]">Floor Length</td>
+                </tr>
+                <tr className="hover:bg-[#F7F4EE]/50 transition-colors">
+                  <td className="py-4 px-6 font-medium">Size 58</td>
+                  <td className="py-4 px-6 text-[#8A857C]">5&apos;7&quot; – 5&apos;8&quot;</td>
+                  <td className="py-4 px-6">{val(147, 58.0)}</td>
+                  <td className="py-4 px-6">{val(121, 47.6)}</td>
+                  <td className="py-4 px-6">{val(73, 28.7)}</td>
+                  <td className="py-4 px-6 text-[#B08D57]">Floor Length</td>
+                </tr>
+                <tr className="hover:bg-[#F7F4EE]/50 transition-colors">
+                  <td className="py-4 px-6 font-medium">Size 60</td>
+                  <td className="py-4 px-6 text-[#8A857C]">5&apos;9&quot; – 5&apos;11&quot;</td>
+                  <td className="py-4 px-6">{val(152, 60.0)}</td>
+                  <td className="py-4 px-6">{val(126, 49.6)}</td>
+                  <td className="py-4 px-6">{val(76, 29.9)}</td>
+                  <td className="py-4 px-6 text-[#B08D57]">Floor Length</td>
                 </tr>
               </tbody>
             </table>

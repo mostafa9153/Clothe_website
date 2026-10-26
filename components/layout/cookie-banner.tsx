@@ -7,7 +7,7 @@ export function CookieBanner() {
   const [isVisible, setIsVisible] = React.useState(false);
 
   React.useEffect(() => {
-    const consent = localStorage.getItem("maison_aure_cookie_consent");
+    const consent = localStorage.getItem("amzad_cookie_consent") || localStorage.getItem("maison_aure_cookie_consent");
     if (!consent) {
       const timer = setTimeout(() => setIsVisible(true), 1500);
       return () => clearTimeout(timer);
@@ -15,12 +15,12 @@ export function CookieBanner() {
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem("maison_aure_cookie_consent", "accepted");
+    localStorage.setItem("amzad_cookie_consent", "accepted");
     setIsVisible(false);
   };
 
   const handleDecline = () => {
-    localStorage.setItem("maison_aure_cookie_consent", "declined");
+    localStorage.setItem("amzad_cookie_consent", "declined");
     setIsVisible(false);
   };
 
@@ -29,7 +29,7 @@ export function CookieBanner() {
   return (
     <aside
       aria-label="Privacy and cookies"
-      className="fixed bottom-6 left-6 z-40 max-w-md bg-[#F7F4EE] border border-[#E4DFD5] shadow-2xl p-5 animate-in fade-in slide-in-from-bottom-5 duration-300"
+      className="fixed bottom-4 left-4 right-4 sm:right-auto sm:left-6 sm:bottom-6 z-30 max-w-sm bg-[#FFFFFF] border border-[#E4DFD5] shadow-2xl p-4 sm:p-5 animate-in fade-in slide-in-from-bottom-5 duration-300"
     >
       <div className="space-y-3">
         <h4 className="font-heading text-base text-[#111111]">Client Privacy & Cookies</h4>

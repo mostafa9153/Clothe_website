@@ -59,6 +59,7 @@ export interface Database {
           id: string;
           name: string;
           slug: string;
+          description?: string | null;
           parent_id: string | null;
           image: string | null;
           sort_order: number;
@@ -69,6 +70,7 @@ export interface Database {
           id?: string;
           name: string;
           slug: string;
+          description?: string | null;
           parent_id?: string | null;
           image?: string | null;
           sort_order?: number;
@@ -79,6 +81,7 @@ export interface Database {
           id?: string;
           name?: string;
           slug?: string;
+          description?: string | null;
           parent_id?: string | null;
           image?: string | null;
           sort_order?: number;
@@ -797,6 +800,7 @@ export interface Category {
   id: string;
   name: string;
   slug: string;
+  description?: string | null;
   parent_id?: string | null;
   image?: string | null;
   sort_order: number;

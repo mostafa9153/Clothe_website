@@ -10,6 +10,8 @@ import { QuickViewModal } from "@/components/product/quick-view-modal";
 import { FilterSidebar, FilterState } from "./filter-sidebar";
 import { Button } from "@/components/ui/button";
 import { Pagination } from "@/components/ui/pagination";
+import { toast } from "@/components/ui/toast";
+import { FacetSize, FacetColor } from "./filter-sidebar";
 
 interface CatalogViewProps {
   categories: Category[];
@@ -72,10 +74,143 @@ export function CatalogView({
     [router, pathname, initialCategory, initialSale, initialNew, initialSearch]
   );
 
+  // All products for category count tallies
+  const allStoreProducts = React.useMemo(() => getMockProducts({ limit: 1000 }).products, []);
+
+  // Category counts
+  const categoryCounts = React.useMemo(() => {
+    const counts: Record<string, number> = {};
+    allStoreProducts.forEach((p) => {
+      if (p.category_slug) {
+        counts[p.category_slug] = (counts[p.category_slug] || 0) + 1;
+      }
+    });
+    return counts;
+  }, [allStoreProducts]);
+
+  // Base products in the CURRENT department (before size/color/price refinement)
+  const categoryBaseProducts = React.useMemo(() => {
+    return getMockProducts({
+      category: filters.category || undefined,
+      collection: initialCollection || undefined,
+      search: initialSearch || undefined,
+      limit: 1000,
+    }).products;
+  }, [filters.category, initialCollection, initialSearch]);
+
+  const totalInCategory = categoryBaseProducts.length;
+
+  // Dynamic Facet Sizes with live counts based on current category + other active filters
+  const facetSizes: FacetSize[] = React.useMemo(() => {
+    const counts: Record<string, number> = {};
+    const presentSizes = new Set<string>();
+
+    categoryBaseProducts.forEach((p) => {
+      p.variants.forEach((v) => presentSizes.add(v.size));
+    });
+
+    presentSizes.forEach((sz) => {
+      const matchCount = categoryBaseProducts.filter((p) => {
+        const matchesSize = p.variants.some((v) => v.size.toLowerCase() === sz.toLowerCase() && (!filters.inStock || v.stock > 0));
+        const matchesColor = !filters.color || p.variants.some((v) => v.color.toLowerCase().includes(filters.color.toLowerCase()));
+        const matchesPrice = (p.sale_price ?? p.base_price) <= filters.maxPrice && (p.sale_price ?? p.base_price) >= filters.minPrice;
+        const matchesStock = !filters.inStock || (p.total_stock ?? 0) > 0;
+        const matchesSale = !filters.onSale || (p.sale_price !== null && p.sale_price < p.base_price);
+        const matchesNew = !filters.isNew || p.is_new;
+        return matchesSize && matchesColor && matchesPrice && matchesStock && matchesSale && matchesNew;
+      }).length;
+      counts[sz] = matchCount;
+    });
+
+    return Array.from(presentSizes).map((sz) => ({
+      size: sz,
+      count: counts[sz] || 0,
+    }));
+  }, [categoryBaseProducts, filters.color, filters.minPrice, filters.maxPrice, filters.inStock, filters.onSale, filters.isNew]);
+
+  // Dynamic Facet Colors with live counts based on current category + other active filters
+  const facetColors: FacetColor[] = React.useMemo(() => {
+    const map = new Map<string, { name: string; hex: string }>();
+    categoryBaseProducts.forEach((p) => {
+      p.variants.forEach((v) => {
+        if (!map.has(v.color.toLowerCase())) {
+          map.set(v.color.toLowerCase(), { name: v.color, hex: v.color_hex || "#111111" });
+        }
+      });
+    });
+
+    return Array.from(map.values()).map((c) => {
+      const count = categoryBaseProducts.filter((p) => {
+        const matchesColor = p.variants.some((v) => v.color.toLowerCase().includes(c.name.toLowerCase()));
+        const matchesSize = !filters.size || p.variants.some((v) => v.size.toLowerCase() === filters.size.toLowerCase() && (!filters.inStock || v.stock > 0));
+        const matchesPrice = (p.sale_price ?? p.base_price) <= filters.maxPrice && (p.sale_price ?? p.base_price) >= filters.minPrice;
+        const matchesStock = !filters.inStock || (p.total_stock ?? 0) > 0;
+        const matchesSale = !filters.onSale || (p.sale_price !== null && p.sale_price < p.base_price);
+        const matchesNew = !filters.isNew || p.is_new;
+        return matchesColor && matchesSize && matchesPrice && matchesStock && matchesSale && matchesNew;
+      }).length;
+      return {
+        name: c.name,
+        hex: c.hex,
+        count,
+      };
+    });
+  }, [categoryBaseProducts, filters.size, filters.minPrice, filters.maxPrice, filters.inStock, filters.onSale, filters.isNew]);
+
   const handleFilterChange = (newFilters: FilterState) => {
     setFilters(newFilters);
     setPage(1);
     updateUrl(newFilters, 1);
+  };
+
+  const handleCategoryChange = (slug: string) => {
+    const nextCategory = filters.category === slug ? "" : slug;
+
+    // Check if current active size & color exist in new category
+    const nextCatProducts = getMockProducts({
+      category: nextCategory || undefined,
+      collection: initialCollection || undefined,
+      search: initialSearch || undefined,
+      limit: 1000,
+    }).products;
+
+    let resetAny = false;
+    let nextSize = filters.size;
+    let nextColor = filters.color;
+
+    if (nextSize) {
+      const hasSize = nextCatProducts.some((p) =>
+        p.variants.some((v) => v.size.toLowerCase() === nextSize.toLowerCase())
+      );
+      if (!hasSize) {
+        nextSize = "";
+        resetAny = true;
+      }
+    }
+
+    if (nextColor) {
+      const hasColor = nextCatProducts.some((p) =>
+        p.variants.some((v) => v.color.toLowerCase().includes(nextColor.toLowerCase()))
+      );
+      if (!hasColor) {
+        nextColor = "";
+        resetAny = true;
+      }
+    }
+
+    if (resetAny) {
+      toast("Some filters were reset");
+    }
+
+    const updated: FilterState = {
+      ...filters,
+      category: nextCategory,
+      size: nextSize,
+      color: nextColor,
+    };
+    setFilters(updated);
+    setPage(1);
+    updateUrl(updated, 1);
   };
 
   const handleResetFilters = () => {
@@ -182,7 +317,7 @@ export function CatalogView({
           </button>
 
           <span className="text-xs text-[#8A857C] uppercase tracking-wider">
-            Showing <strong className="text-[#111111]">{products.length}</strong> of {total} Pieces
+            Showing <strong className="text-[#111111]">{products.length}</strong> of {totalInCategory || total} Pieces
           </span>
         </div>
 
@@ -274,6 +409,10 @@ export function CatalogView({
             onChange={handleFilterChange}
             onReset={handleResetFilters}
             totalResults={total}
+            facetSizes={facetSizes}
+            facetColors={facetColors}
+            categoryCounts={categoryCounts}
+            onCategoryChange={handleCategoryChange}
           />
         </div>
 
@@ -422,6 +561,10 @@ export function CatalogView({
                 onChange={handleFilterChange}
                 onReset={handleResetFilters}
                 totalResults={total}
+                facetSizes={facetSizes}
+                facetColors={facetColors}
+                categoryCounts={categoryCounts}
+                onCategoryChange={handleCategoryChange}
               />
             </div>
 

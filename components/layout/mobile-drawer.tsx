@@ -67,13 +67,13 @@ export function MobileDrawer({ isOpen, onClose, categories, collections }: Mobil
         <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6">
           {/* Accordion Categories */}
           <div className="space-y-4">
-            {/* Womenswear Accordion */}
+            {/* Burkha & Abaya Accordion */}
             <div className="border-b border-[#E4DFD5] pb-3">
               <button
                 onClick={() => toggleSection("women")}
                 className="w-full flex items-center justify-between text-sm uppercase tracking-[0.18em] font-medium text-[#111111] py-1 text-left"
               >
-                <span>Womenswear</span>
+                <span>Burkha & Abaya</span>
                 <ChevronDown
                   className={`w-4 h-4 stroke-[1.25] text-[#8A857C] transition-transform duration-300 ${
                     openSection === "women" ? "rotate-180" : ""
@@ -84,51 +84,97 @@ export function MobileDrawer({ isOpen, onClose, categories, collections }: Mobil
                 <ul className="pt-3 pl-2 space-y-2.5 text-xs text-[#8A857C] animate-in fade-in duration-200">
                   <li>
                     <Link
-                      href="/category/dresses"
+                      href="/category/burkha"
                       onClick={onClose}
                       className="block hover:text-[#111111] transition-colors py-0.5"
                     >
-                      Dresses & Gowns
+                      Burkha & Abaya
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/category/tops-shirts"
+                      href="/category/abaya"
                       onClick={onClose}
                       className="block hover:text-[#111111] transition-colors py-0.5"
                     >
-                      Tops & Silk Blouses
+                      Abaya & Jilbab
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/category/outerwear"
+                      href="/category/prayer-wear"
                       onClick={onClose}
                       className="block hover:text-[#111111] transition-colors py-0.5"
                     >
-                      Coats & Outerwear
+                      Prayer Wear & Khimar
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/category/trousers"
+                      href="/category/sets-combos"
                       onClick={onClose}
                       className="block hover:text-[#111111] transition-colors py-0.5"
                     >
-                      Trousers & Tailoring
+                      Modest Sets & Combos
                     </Link>
                   </li>
                 </ul>
               )}
             </div>
 
-            {/* Menswear Accordion */}
+            {/* Hijab & Niqab Accordion */}
+            <div className="border-b border-[#E4DFD5] pb-3">
+              <button
+                onClick={() => toggleSection("hijab")}
+                className="w-full flex items-center justify-between text-sm uppercase tracking-[0.18em] font-medium text-[#111111] py-1 text-left"
+              >
+                <span>Hijab & Niqab</span>
+                <ChevronDown
+                  className={`w-4 h-4 stroke-[1.25] text-[#8A857C] transition-transform duration-300 ${
+                    openSection === "hijab" ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+              {openSection === "hijab" && (
+                <ul className="pt-3 pl-2 space-y-2.5 text-xs text-[#8A857C] animate-in fade-in duration-200">
+                  <li>
+                    <Link
+                      href="/category/hijab"
+                      onClick={onClose}
+                      className="block hover:text-[#111111] transition-colors py-0.5"
+                    >
+                      Medina Silk & Chiffon Hijabs
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/category/niqab"
+                      onClick={onClose}
+                      className="block hover:text-[#111111] transition-colors py-0.5"
+                    >
+                      Saudi 3-Layer & Half Niqabs
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/category/accessories"
+                      onClick={onClose}
+                      className="block hover:text-[#111111] transition-colors py-0.5"
+                    >
+                      Bamboo Caps & Magnetic Pins
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </div>
+
+            {/* Menswear Panjabi Accordion */}
             <div className="border-b border-[#E4DFD5] pb-3">
               <button
                 onClick={() => toggleSection("men")}
                 className="w-full flex items-center justify-between text-sm uppercase tracking-[0.18em] font-medium text-[#111111] py-1 text-left"
               >
-                <span>Menswear</span>
+                <span>Panjabi & Jubba</span>
                 <ChevronDown
                   className={`w-4 h-4 stroke-[1.25] text-[#8A857C] transition-transform duration-300 ${
                     openSection === "men" ? "rotate-180" : ""
@@ -139,29 +185,29 @@ export function MobileDrawer({ isOpen, onClose, categories, collections }: Mobil
                 <ul className="pt-3 pl-2 space-y-2.5 text-xs text-[#8A857C] animate-in fade-in duration-200">
                   <li>
                     <Link
-                      href="/category/mens-shirts"
+                      href="/category/panjabi"
                       onClick={onClose}
                       className="block hover:text-[#111111] transition-colors py-0.5"
                     >
-                      Tailored Shirts & Linen
+                      Festive Eid Panjabi
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/shop?category=trousers"
+                      href="/shop?category=panjabi"
                       onClick={onClose}
                       className="block hover:text-[#111111] transition-colors py-0.5"
                     >
-                      Gurkha Trousers & Pants
+                      Egyptian Giza Cotton Panjabi
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/shop?category=outerwear"
+                      href="/shop?category=panjabi"
                       onClick={onClose}
                       className="block hover:text-[#111111] transition-colors py-0.5"
                     >
-                      Blazers & Overcoats
+                      Kabli Sets & Jubbas
                     </Link>
                   </li>
                 </ul>

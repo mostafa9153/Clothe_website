@@ -23,33 +23,33 @@ interface Hotspot {
 const HOTSPOTS: Hotspot[] = [
   {
     id: "spot-1",
-    slug: "the-sculpted-trench-coat",
-    name: "The Sculpted Trench Coat",
-    price: 28800,
-    image: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=400&q=80",
-    category: "Coats & Outerwear",
-    top: "32%",
-    left: "48%",
+    slug: "pure-medina-silk-luxury-hijab",
+    name: "Pure Medina Silk Luxury Hijab",
+    price: 1190,
+    image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=400&q=80",
+    category: "Hijab & Stoles",
+    top: "22%",
+    left: "49%",
   },
   {
     id: "spot-2",
-    slug: "mulberry-silk-bias-slip-dress",
-    name: "Mulberry Silk Bias Slip Dress",
-    price: 24500,
-    image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=400&q=80",
-    category: "Dresses & Gowns",
-    top: "58%",
-    left: "52%",
+    slug: "saudi-3-layer-breathable-chiffon-niqab",
+    name: "Saudi 3-Layer Breathable Chiffon Niqab",
+    price: 1090,
+    image: "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=400&q=80",
+    category: "Niqab & Veils",
+    top: "34%",
+    left: "48%",
   },
   {
     id: "spot-3",
-    slug: "the-heirloom-calfskin-tote",
-    name: "The Heirloom Calfskin Tote",
-    price: 36000,
-    image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=400&q=80",
-    category: "Leather Goods",
-    top: "70%",
-    left: "32%",
+    slug: "royal-dubai-nida-front-open-burkha",
+    name: "The Royal Dubai Nida Front-Open Burkha",
+    price: 5950,
+    image: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=400&q=80",
+    category: "Burkha & Abaya",
+    top: "60%",
+    left: "50%",
   },
 ];
 
@@ -60,9 +60,9 @@ export function ShoppableLook() {
     <section className="py-20 md:py-32 bg-[#FFFFFF] border-b border-[#E4DFD5]">
       <Container>
         <SectionHeading
-          eyebrow="The Atelier Edit"
-          title="Shoppable Lookbook: Look 04"
-          description="Click any hotspot on the muse to inspect textile composition and complete the ensemble."
+          eyebrow="The Modest Ensemble"
+          title="Shoppable Modest Look: The Royal Trio"
+          description="Click any hotspot on the ensemble to inspect fabric breathability and complete your look."
           align="center"
           className="mb-14"
         />
@@ -71,8 +71,8 @@ export function ShoppableLook() {
           {/* Main Lookbook Visual with Interactive Hotspots */}
           <div className="lg:col-span-8 relative aspect-[3/4] bg-[#E4DFD5]/40 overflow-hidden shadow-lg">
             <Image
-              src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1200&q=90"
-              alt="Maison Auré Complete Atelier Look"
+              src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=1200&q=90"
+              alt="AMZAD HAYA Complete Modest Ensemble"
               fill
               sizes="(max-width: 1024px) 100vw, 66vw"
               className="object-cover"

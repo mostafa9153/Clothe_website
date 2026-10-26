@@ -15,14 +15,15 @@ interface BestsellersTabsProps {
 }
 
 export function BestsellersTabs({ products }: BestsellersTabsProps) {
-  const [activeTab, setActiveTab] = React.useState<"all" | "women" | "men" | "accessories">("all");
+  const [activeTab, setActiveTab] = React.useState<"all" | "burkha" | "hijab" | "panjabi" | "sets">("all");
   const [quickViewProduct, setQuickViewProduct] = React.useState<Product | null>(null);
 
   const filtered = products.filter((p) => {
     if (activeTab === "all") return true;
-    if (activeTab === "women") return ["cat-w-dresses", "cat-w-tops", "cat-outerwear"].includes(p.category_id || "");
-    if (activeTab === "men") return ["cat-m-tailoring", "cat-trousers"].includes(p.category_id || "");
-    if (activeTab === "accessories") return p.category_id === "cat-accessories";
+    if (activeTab === "burkha") return ["cat-burkha", "cat-abaya"].includes(p.category_id || "");
+    if (activeTab === "hijab") return ["cat-hijab", "cat-niqab"].includes(p.category_id || "");
+    if (activeTab === "panjabi") return p.category_id === "cat-panjabi";
+    if (activeTab === "sets") return ["cat-sets-combos", "cat-prayer-wear"].includes(p.category_id || "");
     return true;
   }).slice(0, 8);
 
@@ -32,13 +33,13 @@ export function BestsellersTabs({ products }: BestsellersTabsProps) {
         <SectionHeading
           eyebrow="Proven Client Icons"
           title="The Atelier Bestsellers"
-          description="Garments that our private clientele commission repeatedly for silhouette, handfeel, and presence."
+          description="Garments that our patrons select repeatedly for drape, breathability, and dignified presence."
           align="center"
           className="mb-8"
         />
 
         {/* Tab Switcher */}
-        <div className="flex justify-center items-center gap-2 sm:gap-4 mb-12 border-b border-[#E4DFD5] pb-4">
+        <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 mb-12 border-b border-[#E4DFD5] pb-4">
           <button
             onClick={() => setActiveTab("all")}
             className={`pb-2 px-3 text-xs uppercase tracking-[0.2em] font-medium transition-all relative ${
@@ -50,34 +51,44 @@ export function BestsellersTabs({ products }: BestsellersTabsProps) {
             All Icons
           </button>
           <button
-            onClick={() => setActiveTab("women")}
+            onClick={() => setActiveTab("burkha")}
             className={`pb-2 px-3 text-xs uppercase tracking-[0.2em] font-medium transition-all relative ${
-              activeTab === "women"
+              activeTab === "burkha"
                 ? "text-[#111111] font-semibold after:absolute after:bottom-[-17px] after:left-0 after:right-0 after:h-[2px] after:bg-[#111111]"
                 : "text-[#8A857C] hover:text-[#111111]"
             }`}
           >
-            Womenswear
+            Burkha & Abaya
           </button>
           <button
-            onClick={() => setActiveTab("men")}
+            onClick={() => setActiveTab("hijab")}
             className={`pb-2 px-3 text-xs uppercase tracking-[0.2em] font-medium transition-all relative ${
-              activeTab === "men"
+              activeTab === "hijab"
                 ? "text-[#111111] font-semibold after:absolute after:bottom-[-17px] after:left-0 after:right-0 after:h-[2px] after:bg-[#111111]"
                 : "text-[#8A857C] hover:text-[#111111]"
             }`}
           >
-            Menswear
+            Hijab & Niqab
           </button>
           <button
-            onClick={() => setActiveTab("accessories")}
+            onClick={() => setActiveTab("panjabi")}
             className={`pb-2 px-3 text-xs uppercase tracking-[0.2em] font-medium transition-all relative ${
-              activeTab === "accessories"
+              activeTab === "panjabi"
                 ? "text-[#111111] font-semibold after:absolute after:bottom-[-17px] after:left-0 after:right-0 after:h-[2px] after:bg-[#111111]"
                 : "text-[#8A857C] hover:text-[#111111]"
             }`}
           >
-            Artisanal Leather
+            Men&apos;s Panjabi
+          </button>
+          <button
+            onClick={() => setActiveTab("sets")}
+            className={`pb-2 px-3 text-xs uppercase tracking-[0.2em] font-medium transition-all relative ${
+              activeTab === "sets"
+                ? "text-[#111111] font-semibold after:absolute after:bottom-[-17px] after:left-0 after:right-0 after:h-[2px] after:bg-[#111111]"
+                : "text-[#8A857C] hover:text-[#111111]"
+            }`}
+          >
+            Sets & Combos
           </button>
         </div>
 

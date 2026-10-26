@@ -34,74 +34,74 @@ export default function CareGuidePage() {
         </div>
 
         <div className="space-y-8">
-          {/* Mulberry Silk */}
+          {/* Dubai Nida */}
           <div className="bg-white border border-[#E4DFD5] p-8 space-y-4 shadow-xs">
             <span className="text-[10px] uppercase tracking-[0.2em] text-[#B08D57] font-medium block">
-              Fiber 01 • Mulberry Silk (24 Momme)
+              Textile 01 • Pure Dubai Nida &amp; Zoom Crepe
             </span>
             <h3 className="font-heading text-2xl text-[#111111]">
-              Silk Gowns, Bias Slip Dresses &amp; Blouses
+              Front-Open Burkhas, Butterfly Abayas &amp; French Jilbabs
             </h3>
             <div className="text-xs sm:text-sm text-[#8A857C] space-y-3 leading-relaxed font-light">
               <p>
-                <strong>Cleaning:</strong> Professional green dry cleaning is recommended. If hand washing at home, immerse in cold water (&le; 20&deg;C) with a specialized pH-neutral liquid silk wash. Never wring or twist bias seams.
+                <strong>Cleaning:</strong> Hand wash or machine wash cold inside out using a gentle abaya wash or pH-neutral liquid detergent. Use a laundry mesh bag to protect snap closures and embroidery.
               </p>
               <p>
-                <strong>Drying &amp; Ironing:</strong> Press excess moisture between two clean white terry towels and dry flat in open shade away from direct sunlight. Steam gently on the reverse silk setting while the garment remains slightly damp.
+                <strong>Drying &amp; Steaming:</strong> Hang immediately on a contoured wide hanger to dry in shade. Use a handheld vertical garment steamer to release wrinkles; avoid pressing flat with hot dry irons to prevent surface sheen.
               </p>
             </div>
           </div>
 
-          {/* Cashmere & Fine Wool */}
+          {/* Medina Silk & Chiffon */}
           <div className="bg-white border border-[#E4DFD5] p-8 space-y-4 shadow-xs">
             <span className="text-[10px] uppercase tracking-[0.2em] text-[#B08D57] font-medium block">
-              Fiber 02 • Mongolian Cashmere &amp; Merino Wool
+              Textile 02 • Authentic Medina Silk &amp; Korean Chiffon
             </span>
             <h3 className="font-heading text-2xl text-[#111111]">
-              Double-Breasted Coats, Knitwear &amp; Tailored Trousers
+              Medina Silk Hijabs, Crinkle Stoles &amp; 3-Layer Niqabs
             </h3>
             <div className="text-xs sm:text-sm text-[#8A857C] space-y-3 leading-relaxed font-light">
               <p>
-                <strong>Storage:</strong> Never hang fine knitwear on wire or narrow hangers; fold carefully in breathable cotton bags with natural cedarwood spheres to repel moths.
+                <strong>Pin Care:</strong> Always use snag-free magnetic hijab pins to prevent puncturing delicate woven fibers. Never force sharp or serrated safety pins through fine silk scarves.
               </p>
               <p>
-                <strong>Pilling Care:</strong> Natural wool pilling is a sign of long-staple softness, not defect. Remove surface fuzz gently using a dedicated cashmere comb, stroking in the direction of the knit grain.
+                <strong>Washing:</strong> Immerse in lukewarm water with gentle soap. Do not wring or scrub eye slits. Flat dry or hang over a smooth rail; dries within 20 minutes with zero odor retention.
               </p>
             </div>
           </div>
 
-          {/* French & Irish Linen */}
+          {/* Egyptian Giza Cotton & Linen */}
           <div className="bg-white border border-[#E4DFD5] p-8 space-y-4 shadow-xs">
             <span className="text-[10px] uppercase tracking-[0.2em] text-[#B08D57] font-medium block">
-              Fiber 03 • French &amp; Irish Flax Linen
+              Textile 03 • Egyptian Giza Cotton &amp; Hand-Loomed Linen
             </span>
             <h3 className="font-heading text-2xl text-[#111111]">
-              Band Collar Shirts &amp; Unstructured Summer Blazers
+              Festive Eid Panjabis, Bandhgala Jubbas &amp; Kabli Sets
             </h3>
             <div className="text-xs sm:text-sm text-[#8A857C] space-y-3 leading-relaxed font-light">
               <p>
-                <strong>Washing:</strong> Machine wash cold on a delicate cycle using mild detergent. Flax fibers soften and gain character with successive washes.
+                <strong>Embroidery Protection:</strong> Turn garments inside out before washing to protect delicate zardozi and resham threadwork along collars and plackets. Dry clean recommended for silk-blend festive pieces.
               </p>
               <p>
-                <strong>Embracing Wrinkles:</strong> The natural undulating creasing of pure linen is the hallmark of relaxed luxury. If a sharp finish is desired, iron with steam while damp using medium-high heat.
+                <strong>Ironing:</strong> Press while slightly damp with a medium-high steam iron. Iron embroidered regions from the reverse side over a soft towel to preserve three-dimensional embroidery relief.
               </p>
             </div>
           </div>
 
-          {/* Leather Goods */}
+          {/* Bamboo Under-Scarves & Prayer Mats */}
           <div className="bg-white border border-[#E4DFD5] p-8 space-y-4 shadow-xs">
             <span className="text-[10px] uppercase tracking-[0.2em] text-[#B08D57] font-medium block">
-              Fiber 04 • Vegetable Tanned Leather
+              Textile 04 • Organic Bamboo Viscose &amp; Turkish Velvet
             </span>
             <h3 className="font-heading text-2xl text-[#111111]">
-              Totes, Belts &amp; Artisanal Accessories
+              Under-Scarf Inner Caps, Travel Jaynamaz &amp; Accessories
             </h3>
             <div className="text-xs sm:text-sm text-[#8A857C] space-y-3 leading-relaxed font-light">
               <p>
-                <strong>Patina:</strong> Untreated vegetable-tanned leather naturally darkens and develops a rich patina over time when exposed to natural oils and ambient light.
+                <strong>Under-Cap Hygiene:</strong> Wash organic bamboo inner caps frequently in cold water to maintain natural elasticity and antimicrobial scalp breathability.
               </p>
               <p>
-                <strong>Conditioning:</strong> Treat once or twice annually with organic beeswax leather balm. Wipe moisture immediately with an absorbent dry microfiber cloth.
+                <strong>Prayer Mat Maintenance:</strong> Spot-clean padded velvet prayer mats with a damp microfiber cloth. Store inside the travel clutch away from direct moisture.
               </p>
             </div>
           </div>

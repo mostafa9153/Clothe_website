@@ -25,12 +25,22 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
   // Simple "Did you mean" suggestions if unusual query
   const suggestions: Record<string, string> = {
-    coton: "cotton",
-    silke: "silk",
-    cashemere: "cashmere",
-    pant: "trousers",
-    trouser: "trousers",
-    jacket: "outerwear",
+    borka: "burkha",
+    burka: "burkha",
+    borkha: "burkha",
+    abya: "abaya",
+    hijap: "hijab",
+    shela: "hijab",
+    scurf: "hijab",
+    naqab: "niqab",
+    nikab: "niqab",
+    panjaby: "panjabi",
+    punjabi: "panjabi",
+    kurta: "panjabi",
+    juba: "jubba",
+    thob: "thobe",
+    jaynamaj: "prayer mat",
+    janamaz: "prayer mat",
   };
   const didYouMean = suggestions[cleanQuery.toLowerCase()];
 

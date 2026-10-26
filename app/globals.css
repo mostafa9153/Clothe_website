@@ -9,6 +9,7 @@
     --border-hairline: #E4DFD5;
     --accent-gold: #B08D57;
     --dark-olive: #2B2E26;
+    --deep-emerald: #1F3A33;
   }
 
   * {
@@ -17,11 +18,13 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  html,
   body {
     background-color: var(--bg-ivory);
     color: var(--text-ink);
     font-family: var(--font-body), system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
+    max-width: 100%;
     min-height: 100vh;
   }
 

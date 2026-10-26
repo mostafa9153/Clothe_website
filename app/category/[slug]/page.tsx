@@ -45,9 +45,15 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <h1 className="font-heading text-4xl sm:text-5xl font-normal text-[#111111] tracking-tight">
             {category.name}
           </h1>
-          <p className="text-xs sm:text-sm text-[#8A857C] max-w-2xl leading-relaxed">
-            Curated silhouettes tailored from premium European flax linen, pure Mulberry silk, and extrafine merino wool.
-          </p>
+          {category.description ? (
+            <p className="text-xs sm:text-sm text-[#8A857C] max-w-2xl leading-relaxed">
+              {category.description}
+            </p>
+          ) : (
+            <p className="text-xs sm:text-sm text-[#8A857C] max-w-2xl leading-relaxed">
+              Browse {category.name}
+            </p>
+          )}
         </div>
 
         <Suspense fallback={<div className="py-20 text-center text-xs text-[#8A857C]">Loading department...</div>}>

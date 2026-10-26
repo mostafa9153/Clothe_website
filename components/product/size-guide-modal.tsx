@@ -37,18 +37,38 @@ export function SizeGuideModal({
 
   if (!isOpen) return null;
 
+  const isBurkhaOrAbaya = /burkha|abaya|jilbab/i.test(categoryName);
+  const isPanjabi = /panjabi|jubba|thobe|kurta/i.test(categoryName);
+
   // Rule-Based Size Calculation Engine:
-  // Evaluates BMI and height thresholds + fit preference offset:
-  // - Weight < 52kg / BMI < 18.5 -> XS (or S if relaxed)
-  // - 52kg <= Weight <= 64kg -> S (or M if relaxed, XS if fitted)
-  // - 65kg <= Weight <= 76kg -> M (or L if relaxed, S if fitted)
-  // - 77kg <= Weight <= 88kg -> L (or XL if relaxed, M if fitted)
-  // - Weight > 88kg -> XL
   const calculateSize = (e: React.FormEvent) => {
     e.preventDefault();
     const h = Number(height);
     const w = Number(weight);
-    if (!h || !w) return;
+    if (!h) return;
+
+    if (isBurkhaOrAbaya) {
+      // Height-based abaya sizing:
+      let abayaSize = "54";
+      if (h <= 155) abayaSize = "52";
+      else if (h <= 162) abayaSize = "54";
+      else if (h <= 168) abayaSize = "56";
+      else if (h <= 175) abayaSize = "58";
+      else abayaSize = "60";
+      setRecommendedSize(abayaSize);
+      return;
+    }
+
+    if (isPanjabi) {
+      let panjabiSize = "40 (M)";
+      if (w < 58) panjabiSize = "38 (S)";
+      else if (w <= 70) panjabiSize = "40 (M)";
+      else if (w <= 82) panjabiSize = "42 (L)";
+      else if (w <= 94) panjabiSize = "44 (XL)";
+      else panjabiSize = "46 (XXL)";
+      setRecommendedSize(panjabiSize);
+      return;
+    }
 
     let baseSize = "M";
     if (w < 52) {
@@ -161,58 +181,158 @@ export function SizeGuideModal({
 
             {/* Table */}
             <div className="overflow-x-auto border border-[#E4DFD5] bg-white">
-              <table className="w-full text-left text-xs">
-                <thead className="bg-[#F7F4EE] border-b border-[#E4DFD5] uppercase tracking-wider text-[10px] text-[#8A857C]">
-                  <tr>
-                    <th className="p-3">Atelier Size</th>
-                    <th className="p-3">UK / IND</th>
-                    <th className="p-3">Bust ({unit})</th>
-                    <th className="p-3">Waist ({unit})</th>
-                    <th className="p-3">Hip ({unit})</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#E4DFD5] text-[#111111]">
-                  <tr>
-                    <td className="p-3 font-medium">XS</td>
-                    <td className="p-3">6–8</td>
-                    <td className="p-3">{unit === "cm" ? "80–84" : "31.5–33"}</td>
-                    <td className="p-3">{unit === "cm" ? "62–66" : "24.5–26"}</td>
-                    <td className="p-3">{unit === "cm" ? "88–92" : "34.5–36"}</td>
-                  </tr>
-                  <tr>
-                    <td className="p-3 font-medium">S</td>
-                    <td className="p-3">8–10</td>
-                    <td className="p-3">{unit === "cm" ? "84–88" : "33–34.5"}</td>
-                    <td className="p-3">{unit === "cm" ? "66–70" : "26–27.5"}</td>
-                    <td className="p-3">{unit === "cm" ? "92–96" : "36–37.8"}</td>
-                  </tr>
-                  <tr>
-                    <td className="p-3 font-medium">M</td>
-                    <td className="p-3">10–12</td>
-                    <td className="p-3">{unit === "cm" ? "88–94" : "34.5–37"}</td>
-                    <td className="p-3">{unit === "cm" ? "70–76" : "27.5–30"}</td>
-                    <td className="p-3">{unit === "cm" ? "96–102" : "37.8–40"}</td>
-                  </tr>
-                  <tr>
-                    <td className="p-3 font-medium">L</td>
-                    <td className="p-3">12–14</td>
-                    <td className="p-3">{unit === "cm" ? "94–100" : "37–39.5"}</td>
-                    <td className="p-3">{unit === "cm" ? "76–82" : "30–32"}</td>
-                    <td className="p-3">{unit === "cm" ? "102–108" : "40–42.5"}</td>
-                  </tr>
-                  <tr>
-                    <td className="p-3 font-medium">XL</td>
-                    <td className="p-3">14–16</td>
-                    <td className="p-3">{unit === "cm" ? "100–108" : "39.5–42.5"}</td>
-                    <td className="p-3">{unit === "cm" ? "82–90" : "32–35.5"}</td>
-                    <td className="p-3">{unit === "cm" ? "108–116" : "42.5–45.5"}</td>
-                  </tr>
-                </tbody>
-              </table>
+              {isBurkhaOrAbaya ? (
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-[#F7F4EE] border-b border-[#E4DFD5] uppercase tracking-wider text-[10px] text-[#8A857C]">
+                    <tr>
+                      <th className="p-3">Burkha Size</th>
+                      <th className="p-3">Your Height</th>
+                      <th className="p-3">Length ({unit})</th>
+                      <th className="p-3">Bust ({unit})</th>
+                      <th className="p-3">Sleeve ({unit})</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#E4DFD5] text-[#111111]">
+                    <tr>
+                      <td className="p-3 font-medium">Size 52</td>
+                      <td className="p-3 text-[#8A857C]">5&apos;0&quot; – 5&apos;2&quot;</td>
+                      <td className="p-3">{unit === "cm" ? "132" : "52"}</td>
+                      <td className="p-3">{unit === "cm" ? "106" : "41.7"}</td>
+                      <td className="p-3">{unit === "cm" ? "66" : "26"}</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-medium">Size 54</td>
+                      <td className="p-3 text-[#8A857C]">5&apos;3&quot; – 5&apos;4&quot;</td>
+                      <td className="p-3">{unit === "cm" ? "137" : "54"}</td>
+                      <td className="p-3">{unit === "cm" ? "111" : "43.7"}</td>
+                      <td className="p-3">{unit === "cm" ? "68" : "26.8"}</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-medium">Size 56</td>
+                      <td className="p-3 text-[#8A857C]">5&apos;5&quot; – 5&apos;6&quot;</td>
+                      <td className="p-3">{unit === "cm" ? "142" : "56"}</td>
+                      <td className="p-3">{unit === "cm" ? "116" : "45.7"}</td>
+                      <td className="p-3">{unit === "cm" ? "71" : "28"}</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-medium">Size 58</td>
+                      <td className="p-3 text-[#8A857C]">5&apos;7&quot; – 5&apos;8&quot;</td>
+                      <td className="p-3">{unit === "cm" ? "147" : "58"}</td>
+                      <td className="p-3">{unit === "cm" ? "121" : "47.6"}</td>
+                      <td className="p-3">{unit === "cm" ? "73" : "28.7"}</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-medium">Size 60</td>
+                      <td className="p-3 text-[#8A857C]">5&apos;9&quot; – 5&apos;11&quot;</td>
+                      <td className="p-3">{unit === "cm" ? "152" : "60"}</td>
+                      <td className="p-3">{unit === "cm" ? "126" : "49.6"}</td>
+                      <td className="p-3">{unit === "cm" ? "76" : "29.9"}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              ) : isPanjabi ? (
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-[#F7F4EE] border-b border-[#E4DFD5] uppercase tracking-wider text-[10px] text-[#8A857C]">
+                    <tr>
+                      <th className="p-3">Panjabi Size</th>
+                      <th className="p-3">Chest ({unit})</th>
+                      <th className="p-3">Length ({unit})</th>
+                      <th className="p-3">Shoulder ({unit})</th>
+                      <th className="p-3">Sleeve ({unit})</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#E4DFD5] text-[#111111]">
+                    <tr>
+                      <td className="p-3 font-medium">38 (S)</td>
+                      <td className="p-3">{unit === "cm" ? "96" : "38"}</td>
+                      <td className="p-3">{unit === "cm" ? "102" : "40"}</td>
+                      <td className="p-3">{unit === "cm" ? "44" : "17.3"}</td>
+                      <td className="p-3">{unit === "cm" ? "63" : "24.8"}</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-medium">40 (M)</td>
+                      <td className="p-3">{unit === "cm" ? "102" : "40"}</td>
+                      <td className="p-3">{unit === "cm" ? "107" : "42"}</td>
+                      <td className="p-3">{unit === "cm" ? "46" : "18.1"}</td>
+                      <td className="p-3">{unit === "cm" ? "65" : "25.6"}</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-medium">42 (L)</td>
+                      <td className="p-3">{unit === "cm" ? "108" : "42.5"}</td>
+                      <td className="p-3">{unit === "cm" ? "112" : "44"}</td>
+                      <td className="p-3">{unit === "cm" ? "48" : "18.9"}</td>
+                      <td className="p-3">{unit === "cm" ? "66" : "26"}</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-medium">44 (XL)</td>
+                      <td className="p-3">{unit === "cm" ? "114" : "45"}</td>
+                      <td className="p-3">{unit === "cm" ? "117" : "46"}</td>
+                      <td className="p-3">{unit === "cm" ? "50" : "19.7"}</td>
+                      <td className="p-3">{unit === "cm" ? "67.5" : "26.6"}</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-medium">46 (XXL)</td>
+                      <td className="p-3">{unit === "cm" ? "120" : "47.2"}</td>
+                      <td className="p-3">{unit === "cm" ? "122" : "48"}</td>
+                      <td className="p-3">{unit === "cm" ? "52" : "20.5"}</td>
+                      <td className="p-3">{unit === "cm" ? "69" : "27.2"}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              ) : (
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-[#F7F4EE] border-b border-[#E4DFD5] uppercase tracking-wider text-[10px] text-[#8A857C]">
+                    <tr>
+                      <th className="p-3">Atelier Size</th>
+                      <th className="p-3">UK / IND</th>
+                      <th className="p-3">Bust ({unit})</th>
+                      <th className="p-3">Waist ({unit})</th>
+                      <th className="p-3">Hip ({unit})</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#E4DFD5] text-[#111111]">
+                    <tr>
+                      <td className="p-3 font-medium">XS</td>
+                      <td className="p-3">6–8</td>
+                      <td className="p-3">{unit === "cm" ? "80–84" : "31.5–33"}</td>
+                      <td className="p-3">{unit === "cm" ? "62–66" : "24.5–26"}</td>
+                      <td className="p-3">{unit === "cm" ? "88–92" : "34.5–36"}</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-medium">S</td>
+                      <td className="p-3">8–10</td>
+                      <td className="p-3">{unit === "cm" ? "84–88" : "33–34.5"}</td>
+                      <td className="p-3">{unit === "cm" ? "66–70" : "26–27.5"}</td>
+                      <td className="p-3">{unit === "cm" ? "92–96" : "36–37.8"}</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-medium">M</td>
+                      <td className="p-3">10–12</td>
+                      <td className="p-3">{unit === "cm" ? "88–94" : "34.5–37"}</td>
+                      <td className="p-3">{unit === "cm" ? "70–76" : "27.5–30"}</td>
+                      <td className="p-3">{unit === "cm" ? "96–102" : "37.8–40"}</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-medium">L</td>
+                      <td className="p-3">12–14</td>
+                      <td className="p-3">{unit === "cm" ? "94–100" : "37–39.5"}</td>
+                      <td className="p-3">{unit === "cm" ? "76–82" : "30–32"}</td>
+                      <td className="p-3">{unit === "cm" ? "102–108" : "40–42.5"}</td>
+                    </tr>
+                    <tr>
+                      <td className="p-3 font-medium">XL</td>
+                      <td className="p-3">14–16</td>
+                      <td className="p-3">{unit === "cm" ? "100–108" : "39.5–42.5"}</td>
+                      <td className="p-3">{unit === "cm" ? "82–90" : "32–35.5"}</td>
+                      <td className="p-3">{unit === "cm" ? "108–116" : "42.5–45.5"}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              )}
             </div>
 
             <p className="text-[11px] text-[#8A857C] italic">
-              Tip: If you find yourself positioned between sizes, we recommend selecting the smaller size for silk bias slips and the larger size for structured winter tailoring.
+              Tip: For Burkhas and Abayas, select according to your exact height so the hem rests elegantly just above the shoe without dragging.
             </p>
           </div>
         ) : (

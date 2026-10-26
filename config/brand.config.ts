@@ -3,6 +3,7 @@ export interface BrandConfig {
   tagline: string;
   logoText: string;
   description: string;
+  imageStyle?: "product-only" | "with-models";
   colors: {
     ivory: string;
     warmWhite: string;
@@ -11,6 +12,7 @@ export interface BrandConfig {
     hairline: string;
     champagneGold: string;
     deepOlive: string;
+    deepEmerald?: string;
   };
   fonts: {
     heading: string;
@@ -43,7 +45,7 @@ export interface BrandConfig {
     thresholdAmount: number;    // ₹1000
   };
   shipping: {
-    freeAbove: number;          // ₹2999
+    freeAbove: number;          // ₹1999
     flatRate: number;           // ₹99
     codFee: number;             // ₹49
     giftWrapFee: number;        // ₹250
@@ -60,10 +62,11 @@ export interface BrandConfig {
 }
 
 export const brandConfig: BrandConfig = {
-  name: "MAISON AURÉ",
-  tagline: "Quiet Elegance. Timeless Craft.",
-  logoText: "MAISON AURÉ",
-  description: "An editorial atelier celebrating architectural silhouettes, natural fibers, and the art of subtle luxury.",
+  name: "AMZAD HAYA",
+  tagline: "Modest. Refined. Timeless.",
+  logoText: "AMZAD HAYA",
+  description: "An artisanal modest fashion house celebrating Islamic grace, premium Nida, Georgette, and purposeful everyday elegance.",
+  imageStyle: "product-only",
   colors: {
     ivory: "#F7F4EE",
     warmWhite: "#FFFFFF",
@@ -72,26 +75,27 @@ export const brandConfig: BrandConfig = {
     hairline: "#E4DFD5",
     champagneGold: "#B08D57",
     deepOlive: "#2B2E26",
+    deepEmerald: "#1F3A33",
   },
   fonts: {
     heading: "Cormorant Garamond",
     body: "Jost",
   },
   contact: {
-    email: "concierge@maisonaure.com",
-    phone: "+91 (0) 22 4567 8900",
-    address: "Atelier 14, The Heritage Arcade, Colaba, Mumbai 400001, India",
-    hours: "Monday – Saturday, 10:00 AM – 7:00 PM IST",
+    email: "care@amzadhaya.com",
+    phone: "+91 98301 23456",
+    address: "Amzad Haya Studio, Park Circus, Kolkata, West Bengal 700017, India",
+    hours: "Monday – Saturday, 10:00 AM – 7:30 PM IST",
   },
   socials: {
-    instagram: "https://instagram.com/maisonaure",
-    pinterest: "https://pinterest.com/maisonaure",
-    facebook: "https://facebook.com/maisonaure",
-    twitter: "https://x.com/maisonaure",
+    instagram: "https://instagram.com/amzadhaya",
+    pinterest: "https://pinterest.com/amzadhaya",
+    facebook: "https://facebook.com/amzadhaya",
+    twitter: "https://x.com/amzadhaya",
   },
   whatsapp: {
-    number: "+919876543210",
-    prefilledMessage: "Hello Maison Auré Concierge, I would like private styling assistance with a collection piece.",
+    number: "+919830123456",
+    prefilledMessage: "Assalamu Alaikum Amzad Haya Concierge, I would like personal assistance with a modest collection piece.",
   },
   currency: {
     code: "INR",
@@ -104,7 +108,7 @@ export const brandConfig: BrandConfig = {
     thresholdAmount: 1000,
   },
   shipping: {
-    freeAbove: 2999,
+    freeAbove: 1999,
     flatRate: 99,
     codFee: 49,
     giftWrapFee: 250,
@@ -112,11 +116,11 @@ export const brandConfig: BrandConfig = {
   },
   returnWindowDays: 10,
   policies: {
-    shippingAndReturns: "Complimentary courier delivery across India on orders over ₹2,999. Thoughtful 10-day door-step exchange and returns in immaculate, unwashed condition with original garment seals intact.",
-    privacy: "Your discretion and trust are foundational. We never compromise your personal client record, reserving client information exclusively for order provenance and bespoke communication.",
-    terms: "Every Maison Auré creation is produced in strictly limited runs to honor deliberate artisanal production. By ordering, you agree to our atelier delivery and bespoke care guidelines.",
-    careGuide: "Crafted exclusively from unblended mulberry silk, high-twist French linen, and superfine merino. Dry clean or hand wash cold with pH-neutral silk detergent only. Flat dry in shade.",
-    authenticity: "Each garment features an individual serial identification seal guaranteeing textile lineage and sustainable workshop provenance.",
+    shippingAndReturns: "Complimentary courier delivery across India on orders over ₹1,999. Doorstep 10-day exchange and returns in unworn condition with original tags intact.",
+    privacy: "Your discretion and trust are foundational. We never sell or share your personal information, reserving your details exclusively for order processing and bespoke support.",
+    terms: "Every Amzad Haya garment is crafted with strict adherence to modest proportions, premium fabrics, and ethical workshop standards.",
+    careGuide: "Crafted from premium Korean Nida, Japanese Georgette, and pure breathable cotton. Wash cold on gentle cycle with mild detergent. Hang to dry in shade, steam iron on reverse.",
+    authenticity: "Each creation features an authentic Amzad Haya artisan seal ensuring genuine fabric lineage, opaque modest coverage, and impeccable stitching.",
   },
 };
 

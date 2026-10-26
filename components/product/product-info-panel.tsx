@@ -146,7 +146,7 @@ export function ProductInfoPanel({
       <Breadcrumb
         items={[
           { label: "Atelier", href: "/" },
-          { label: product.category_name || "Catalog", href: `/category/${product.category_slug || "dresses"}` },
+          { label: product.category_name || "Catalog", href: `/category/${product.category_slug || "burkha"}` },
           { label: product.name },
         ]}
       />

@@ -52,7 +52,7 @@ export function StickyAddToBagBar({ product, selectedColor }: StickyAddToBagBarP
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-0 inset-x-0 z-40 bg-[#FFFFFF] border-t border-[#E4DFD5] p-3 shadow-xl md:hidden animate-in slide-in-from-bottom duration-300">
+    <div className="fixed bottom-0 inset-x-0 z-35 bg-[#FFFFFF] border-t border-[#E4DFD5] p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-xl md:hidden animate-in slide-in-from-bottom duration-300">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2.5 overflow-hidden">
           <div className="relative w-10 h-12 bg-[#E4DFD5]/40 flex-shrink-0 overflow-hidden">

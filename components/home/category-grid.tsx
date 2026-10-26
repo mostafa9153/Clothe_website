@@ -16,25 +16,25 @@ export function CategoryGrid({ categories }: CategoryGridProps) {
   // Select top 3 hero category features
   const featured = [
     {
-      title: "Womenswear Atelier",
-      subtitle: "Fluid silks, unlined cashmere, and sculptural drape",
-      link: "/category/dresses",
-      image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=1000&q=85",
-      cta: "Explore Women",
+      title: "Burkha & Abaya Atelier",
+      subtitle: "Pure Dubai Nida, French jilbabs, and butterfly silhouettes",
+      link: "/category/burkha",
+      image: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=1000&q=85",
+      cta: "Explore Burkhas",
     },
     {
-      title: "Tailored Menswear",
-      subtitle: "Bespoke linen shirts, Gurkha cuts, and worsted wools",
-      link: "/category/mens-shirts",
+      title: "Hijab & Niqab Collection",
+      subtitle: "Authentic Medina silk, crinkle chiffon, and 3-layer veils",
+      link: "/category/hijab",
+      image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=1000&q=85",
+      cta: "Explore Hijabs",
+    },
+    {
+      title: "Men's Panjabi & Jubba",
+      subtitle: "Egyptian Giza cotton, zardozi embroidery, and Kabli sets",
+      link: "/category/panjabi",
       image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=1000&q=85",
-      cta: "Explore Men",
-    },
-    {
-      title: "Artisanal Leather & Goods",
-      subtitle: "Vegetable-tanned Tuscan calfskin and naval brass",
-      link: "/category/accessories",
-      image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=1000&q=85",
-      cta: "Explore Accessories",
+      cta: "Explore Panjabis",
     },
   ];
 
@@ -42,9 +42,9 @@ export function CategoryGrid({ categories }: CategoryGridProps) {
     <section className="py-20 md:py-28 bg-[#F7F4EE]">
       <Container>
         <SectionHeading
-          eyebrow="Curated Departments"
-          title="Architectural Wardrobe Disciplines"
-          description="Each atelier category represents an obsessive dialogue between natural raw fibers and timeless human tailoring."
+          eyebrow="Curated Modest Departments"
+          title="The Pillars of Modest Elegance"
+          description="Each department represents a sacred dialogue between modest dignity, breathable natural textiles, and timeless craftsmanship."
           align="center"
           className="mb-14"
         />
