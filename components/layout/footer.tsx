@@ -49,7 +49,7 @@ export function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pb-16 border-b border-[#2D4D44] items-start">
           <div className="lg:col-span-6 space-y-3">
             <span className="text-[11px] uppercase tracking-[0.25em] text-[#B08D57] font-medium">
-              Join Amzad Haya
+              Join AZAD Modest Circle
             </span>
             <h3 className="font-heading text-2xl sm:text-3xl font-normal tracking-wide">
               Subscribe for Modest Wear & Eid Previews

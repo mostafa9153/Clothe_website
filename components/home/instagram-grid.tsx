@@ -9,33 +9,33 @@ import { Container } from "@/components/ui/container";
 const INSTAGRAM_SHOTS = [
   {
     id: "ig-1",
-    image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&q=80",
-    alt: "Maison Auré winter cashmere knitwear moment",
+    image: "https://images.pexels.com/photos/8002584/pexels-photo-8002584.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "AZAD Dubai Atelier Black Abaya in sunlight",
   },
   {
     id: "ig-2",
-    image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&q=80",
-    alt: "Street drape in Milan with sculpted trench",
+    image: "https://images.pexels.com/photos/18410346/pexels-photo-18410346.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Pure Medina Silk Luxury Hijab styling",
   },
   {
     id: "ig-3",
-    image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=600&q=80",
-    alt: "Riviera high summer linen editorial",
+    image: "https://images.pexels.com/photos/19298225/pexels-photo-19298225.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Three-layer breathable Saudi Niqab with eye veil",
   },
   {
     id: "ig-4",
-    image: "https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=600&q=80",
-    alt: "Double-faced cashmere collar detail",
+    image: "https://images.pexels.com/photos/7956933/pexels-photo-7956933.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Men's handcrafted festive zardozi panjabi",
   },
   {
     id: "ig-5",
-    image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=600&q=80",
-    alt: "Tuscan vegetable-tanned leather tote",
+    image: "https://images.pexels.com/photos/9880858/pexels-photo-9880858.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Graceful flowing abaya silhouettes across desert",
   },
   {
     id: "ig-6",
-    image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=80",
-    alt: "Mulberry silk cowl slip dress in motion",
+    image: "https://images.pexels.com/photos/17857931/pexels-photo-17857931.jpeg?auto=compress&cs=tinysrgb&w=800",
+    alt: "Islamic sanctuary architectural geometry and craftsmanship",
   },
 ];
 
@@ -51,7 +51,7 @@ export function InstagramGrid() {
             Follow the Dispatches
           </h3>
           <p className="text-xs text-[#8A857C]">
-            Tag <span className="font-medium text-[#111111]">@maisonaure</span> to join our private client curation.
+            Tag <span className="font-medium text-[#111111]">@azadcouture</span> to join our private client curation.
           </p>
         </div>
 

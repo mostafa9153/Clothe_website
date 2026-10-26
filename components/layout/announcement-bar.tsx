@@ -20,7 +20,7 @@ export function AnnouncementBar() {
 
   React.useEffect(() => {
     setMounted(true);
-    const dismissed = sessionStorage.getItem("amzad_announcement_dismissed");
+    const dismissed = sessionStorage.getItem("azad_announcement_dismissed");
     if (dismissed === "true") {
       setIsVisible(false);
     }
@@ -38,7 +38,7 @@ export function AnnouncementBar() {
 
   const handleDismiss = () => {
     setIsVisible(false);
-    sessionStorage.setItem("amzad_announcement_dismissed", "true");
+    sessionStorage.setItem("azad_announcement_dismissed", "true");
   };
 
   const remainingForFreeShipping = Math.max(0, brandConfig.shipping.freeAbove - subtotal);

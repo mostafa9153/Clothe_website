@@ -38,7 +38,7 @@ const LOOKBOOK_ITEMS: LookbookItem[] = [
     title: "Look I — The Pure Nida Silhouette",
     season: "Eid & Festive 2026",
     description: "Imported grade-A Dubai Nida front-open burkha paired with liquid Medina silk sheila.",
-    image: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=1200&q=85",
+    image: "https://images.pexels.com/photos/13838843/pexels-photo-13838843.jpeg?auto=compress&cs=tinysrgb&w=1200",
     aspect: "tall",
     tags: [
       {
@@ -46,7 +46,7 @@ const LOOKBOOK_ITEMS: LookbookItem[] = [
         name: "The Royal Dubai Nida Front-Open Burkha",
         slug: "royal-dubai-nida-front-open-burkha",
         price: 5950,
-        image: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=400&q=80",
+        image: "https://images.pexels.com/photos/13838843/pexels-photo-13838843.jpeg?auto=compress&cs=tinysrgb&w=400",
         x: 48,
         y: 42,
         category: "Burkha & Abaya",
@@ -58,7 +58,7 @@ const LOOKBOOK_ITEMS: LookbookItem[] = [
     title: "Look II — Medina Silk & Saudi Niqab",
     season: "Eid & Festive 2026",
     description: "Featherlight breathable 3-layer Korean chiffon veil layered with authentic Medina silk drape.",
-    image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=1200&q=85",
+    image: "https://images.pexels.com/photos/19298225/pexels-photo-19298225.jpeg?auto=compress&cs=tinysrgb&w=1200",
     aspect: "portrait",
     tags: [
       {
@@ -66,7 +66,7 @@ const LOOKBOOK_ITEMS: LookbookItem[] = [
         name: "Pure Medina Silk Luxury Hijab",
         slug: "pure-medina-silk-luxury-hijab",
         price: 1190,
-        image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=400&q=80",
+        image: "https://images.pexels.com/photos/18410346/pexels-photo-18410346.jpeg?auto=compress&cs=tinysrgb&w=400",
         x: 52,
         y: 28,
         category: "Hijab & Stoles",
@@ -76,7 +76,7 @@ const LOOKBOOK_ITEMS: LookbookItem[] = [
         name: "Saudi 3-Layer Breathable Chiffon Niqab",
         slug: "saudi-3-layer-breathable-chiffon-niqab",
         price: 1090,
-        image: "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=400&q=80",
+        image: "https://images.pexels.com/photos/19298225/pexels-photo-19298225.jpeg?auto=compress&cs=tinysrgb&w=400",
         x: 50,
         y: 50,
         category: "Niqab & Veils",
@@ -88,7 +88,7 @@ const LOOKBOOK_ITEMS: LookbookItem[] = [
     title: "Look III — The Masculine Festive Cut",
     season: "Eid & Festive 2026",
     description: "Hand-embroidered zardozi bandhgala collar in pure combed cotton-silk with mother-of-pearl closures.",
-    image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=1200&q=85",
+    image: "https://images.pexels.com/photos/6687208/pexels-photo-6687208.jpeg?auto=compress&cs=tinysrgb&w=1200",
     aspect: "portrait",
     tags: [
       {
@@ -96,7 +96,7 @@ const LOOKBOOK_ITEMS: LookbookItem[] = [
         name: "Royal Hand-Embroidered Festive Eid Panjabi",
         slug: "royal-hand-embroidered-eid-panjabi",
         price: 4950,
-        image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=400&q=80",
+        image: "https://images.pexels.com/photos/6687208/pexels-photo-6687208.jpeg?auto=compress&cs=tinysrgb&w=400",
         x: 50,
         y: 40,
         category: "Panjabi & Jubba",
@@ -108,7 +108,7 @@ const LOOKBOOK_ITEMS: LookbookItem[] = [
     title: "Look IV — Moroccan Butterfly Grace",
     season: "Eid & Festive 2026",
     description: "Farasha wide butterfly cut with delicate Maghrebi silk thread embroidery along sleeves and hem.",
-    image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=1200&q=85",
+    image: "https://images.pexels.com/photos/13838842/pexels-photo-13838842.jpeg?auto=compress&cs=tinysrgb&w=1200",
     aspect: "tall",
     tags: [
       {
@@ -116,7 +116,7 @@ const LOOKBOOK_ITEMS: LookbookItem[] = [
         name: "Butterfly Silhouette Moroccan Embroidered Burkha",
         slug: "butterfly-silhouette-moroccan-burkha",
         price: 7490,
-        image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=400&q=80",
+        image: "https://images.pexels.com/photos/13838842/pexels-photo-13838842.jpeg?auto=compress&cs=tinysrgb&w=400",
         x: 48,
         y: 45,
         category: "Burkha & Abaya",
@@ -128,7 +128,7 @@ const LOOKBOOK_ITEMS: LookbookItem[] = [
     title: "Look V — Giza Minimalist Discipline",
     season: "Eid & Festive 2026",
     description: "120s two-ply certified Egyptian Giza cotton with crisp concealed placket for Friday Jummah prayers.",
-    image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=85",
+    image: "https://images.pexels.com/photos/7956933/pexels-photo-7956933.jpeg?auto=compress&cs=tinysrgb&w=1200",
     aspect: "landscape",
     tags: [
       {
@@ -136,7 +136,7 @@ const LOOKBOOK_ITEMS: LookbookItem[] = [
         name: "Egyptian Giza Cotton Minimalist Panjabi",
         slug: "egyptian-giza-cotton-minimalist-panjabi",
         price: 3600,
-        image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=400&q=80",
+        image: "https://images.pexels.com/photos/7956933/pexels-photo-7956933.jpeg?auto=compress&cs=tinysrgb&w=400",
         x: 52,
         y: 45,
         category: "Panjabi & Jubba",
@@ -148,7 +148,7 @@ const LOOKBOOK_ITEMS: LookbookItem[] = [
     title: "Look VI — The Coordinated Triad",
     season: "Eid & Festive 2026",
     description: "Fully color-matched pure Dubai Nida burkha, Medina silk hijab, and 3-layer breathable niqab.",
-    image: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=1200&q=85",
+    image: "https://images.pexels.com/photos/9880858/pexels-photo-9880858.jpeg?auto=compress&cs=tinysrgb&w=1200",
     aspect: "tall",
     tags: [
       {
@@ -156,7 +156,7 @@ const LOOKBOOK_ITEMS: LookbookItem[] = [
         name: "The Signature 3-Piece Modest Set",
         slug: "signature-3-piece-modest-set",
         price: 7990,
-        image: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=400&q=80",
+        image: "https://images.pexels.com/photos/9880858/pexels-photo-9880858.jpeg?auto=compress&cs=tinysrgb&w=400",
         x: 50,
         y: 50,
         category: "Sets & Combos",

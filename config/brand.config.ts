@@ -62,10 +62,10 @@ export interface BrandConfig {
 }
 
 export const brandConfig: BrandConfig = {
-  name: "AMZAD HAYA",
+  name: "AZAD",
   tagline: "Modest. Refined. Timeless.",
-  logoText: "AMZAD HAYA",
-  description: "An artisanal modest fashion house celebrating Islamic grace, premium Nida, Georgette, and purposeful everyday elegance.",
+  logoText: "AZAD",
+  description: "An artisanal modest fashion house celebrating Islamic grace, premium Dubai Nida, French Medina Silk, and purposeful everyday elegance.",
   imageStyle: "product-only",
   colors: {
     ivory: "#F7F4EE",
@@ -82,20 +82,20 @@ export const brandConfig: BrandConfig = {
     body: "Jost",
   },
   contact: {
-    email: "care@amzadhaya.com",
+    email: "care@azadcouture.com",
     phone: "+91 98301 23456",
-    address: "Amzad Haya Studio, Park Circus, Kolkata, West Bengal 700017, India",
+    address: "AZAD Atelier, Park Circus, Kolkata, West Bengal 700017, India",
     hours: "Monday – Saturday, 10:00 AM – 7:30 PM IST",
   },
   socials: {
-    instagram: "https://instagram.com/amzadhaya",
-    pinterest: "https://pinterest.com/amzadhaya",
-    facebook: "https://facebook.com/amzadhaya",
-    twitter: "https://x.com/amzadhaya",
+    instagram: "https://instagram.com/azadcouture",
+    pinterest: "https://pinterest.com/azadcouture",
+    facebook: "https://facebook.com/azadcouture",
+    twitter: "https://x.com/azadcouture",
   },
   whatsapp: {
     number: "+919830123456",
-    prefilledMessage: "Assalamu Alaikum Amzad Haya Concierge, I would like personal assistance with a modest collection piece.",
+    prefilledMessage: "Assalamu Alaikum AZAD Concierge, I would like personal assistance with a modest collection piece.",
   },
   currency: {
     code: "INR",
@@ -118,9 +118,9 @@ export const brandConfig: BrandConfig = {
   policies: {
     shippingAndReturns: "Complimentary courier delivery across India on orders over ₹1,999. Doorstep 10-day exchange and returns in unworn condition with original tags intact.",
     privacy: "Your discretion and trust are foundational. We never sell or share your personal information, reserving your details exclusively for order processing and bespoke support.",
-    terms: "Every Amzad Haya garment is crafted with strict adherence to modest proportions, premium fabrics, and ethical workshop standards.",
+    terms: "Every AZAD garment is crafted with strict adherence to modest proportions, premium fabrics, and ethical workshop standards.",
     careGuide: "Crafted from premium Korean Nida, Japanese Georgette, and pure breathable cotton. Wash cold on gentle cycle with mild detergent. Hang to dry in shade, steam iron on reverse.",
-    authenticity: "Each creation features an authentic Amzad Haya artisan seal ensuring genuine fabric lineage, opaque modest coverage, and impeccable stitching.",
+    authenticity: "Each creation features an authentic AZAD artisan seal ensuring genuine fabric lineage, opaque modest coverage, and impeccable stitching.",
   },
 };
 

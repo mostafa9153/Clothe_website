@@ -149,7 +149,7 @@ export function MegaMenu({ categories, collections, isOpen, onClose }: MegaMenuP
         {/* Visual Editorial Teaser */}
         <div className="col-span-3 relative h-60 overflow-hidden group">
           <Image
-            src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80"
+            src="https://images.pexels.com/photos/13838843/pexels-photo-13838843.jpeg?auto=compress&cs=tinysrgb&w=800"
             alt="The Royal Eid Collection"
             fill
             className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"

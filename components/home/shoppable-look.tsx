@@ -26,7 +26,7 @@ const HOTSPOTS: Hotspot[] = [
     slug: "pure-medina-silk-luxury-hijab",
     name: "Pure Medina Silk Luxury Hijab",
     price: 1190,
-    image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.pexels.com/photos/18410346/pexels-photo-18410346.jpeg?auto=compress&cs=tinysrgb&w=400",
     category: "Hijab & Stoles",
     top: "22%",
     left: "49%",
@@ -36,7 +36,7 @@ const HOTSPOTS: Hotspot[] = [
     slug: "saudi-3-layer-breathable-chiffon-niqab",
     name: "Saudi 3-Layer Breathable Chiffon Niqab",
     price: 1090,
-    image: "https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.pexels.com/photos/19298225/pexels-photo-19298225.jpeg?auto=compress&cs=tinysrgb&w=400",
     category: "Niqab & Veils",
     top: "34%",
     left: "48%",
@@ -46,7 +46,7 @@ const HOTSPOTS: Hotspot[] = [
     slug: "royal-dubai-nida-front-open-burkha",
     name: "The Royal Dubai Nida Front-Open Burkha",
     price: 5950,
-    image: "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.pexels.com/photos/13838843/pexels-photo-13838843.jpeg?auto=compress&cs=tinysrgb&w=400",
     category: "Burkha & Abaya",
     top: "60%",
     left: "50%",
@@ -71,8 +71,8 @@ export function ShoppableLook() {
           {/* Main Lookbook Visual with Interactive Hotspots */}
           <div className="lg:col-span-8 relative aspect-[3/4] bg-[#E4DFD5]/40 overflow-hidden shadow-lg">
             <Image
-              src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=1200&q=90"
-              alt="AMZAD HAYA Complete Modest Ensemble"
+              src="https://images.pexels.com/photos/19298225/pexels-photo-19298225.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              alt="AZAD Complete Modest Ensemble"
               fill
               sizes="(max-width: 1024px) 100vw, 66vw"
               className="object-cover"

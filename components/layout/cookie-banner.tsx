@@ -7,7 +7,7 @@ export function CookieBanner() {
   const [isVisible, setIsVisible] = React.useState(false);
 
   React.useEffect(() => {
-    const consent = localStorage.getItem("amzad_cookie_consent") || localStorage.getItem("maison_aure_cookie_consent");
+    const consent = localStorage.getItem("azad_cookie_consent") || localStorage.getItem("amzad_cookie_consent") || localStorage.getItem("maison_aure_cookie_consent");
     if (!consent) {
       const timer = setTimeout(() => setIsVisible(true), 1500);
       return () => clearTimeout(timer);
@@ -15,12 +15,12 @@ export function CookieBanner() {
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem("amzad_cookie_consent", "accepted");
+    localStorage.setItem("azad_cookie_consent", "accepted");
     setIsVisible(false);
   };
 
   const handleDecline = () => {
-    localStorage.setItem("amzad_cookie_consent", "declined");
+    localStorage.setItem("azad_cookie_consent", "declined");
     setIsVisible(false);
   };
 
